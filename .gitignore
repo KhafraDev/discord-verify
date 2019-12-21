@@ -1,3 +1,9 @@
+# Khafra
+test.*
+old
+*.bak
+config.js
+
 # Logs
 logs
 *.log

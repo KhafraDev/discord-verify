@@ -1,0 +1,23 @@
+{
+  "name": "discord-verify",
+  "version": "1.0.0",
+  "description": "Verify and secure Discord accounts.",
+  "main": "secure.js",
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node -e \"console.log('No testing command, sorry')\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khafradev/discord-verify.git"
+  },
+  "author": "Khafra",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/khafradev/discord-verify/issues"
+  },
+  "homepage": "https://github.com/khafradev/discord-verify#readme"
+}
