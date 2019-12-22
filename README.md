@@ -14,6 +14,6 @@ Verify and secure Discord accounts.
 # No Captcha? 
 The program doesn't require Captcha because it makes direct calls to the Discord API. Instead of verifying using Captcha, an Authorization header is used to verify the account is real.
 
-# "WIP" (no incentive to work on)
-1. Changing avatars and account names.
-2. Removing useless "error handlers".
+# WIP
+* Automation
+* Proxy support ([node-https-proxy-agent](https://github.com/TooTallNate/node-https-proxy-agent)?)

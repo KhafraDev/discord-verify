@@ -2,6 +2,9 @@ const fetch = require('node-fetch');
 const { token, super_properties, useragent, password } = require('../config');
 const url = 'https://discordapp.com/api/v6/users/@me';
 
+/**
+ * Fetch the user object from discord.
+ */
 const user = async () => {
     const res = await fetch(url, {
         headers: {
@@ -22,7 +25,7 @@ const user = async () => {
  * @param {{ email: string, new_password: string, avatar: string }} options User options
  * @returns {boolean} true|false based on request status 
  */
-const modify = async ({ email, new_password, avatar } = {}) => {
+const modify = async ({ email, new_password = null, avatar } = {}) => {
     const userObj = await user();
     const body = JSON.stringify({
         username: userObj.username,
@@ -30,7 +33,7 @@ const modify = async ({ email, new_password, avatar } = {}) => {
         password: password,
         avatar: avatar || userObj.avatar,
         discriminator: null,
-        new_password: new_password || null
+        new_password: new_password
     });
 
     const res = await fetch(url, {
@@ -50,7 +53,7 @@ const modify = async ({ email, new_password, avatar } = {}) => {
     try {
         return res.json();
     } catch {
-        return res.text();
+        return res.text(); // ????
     }
 }
 

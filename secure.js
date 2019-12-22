@@ -1,35 +1,31 @@
 const Modify = require('./src/account');
 const { getNumber, getSMS, phone, phone_code } = require('./src/phone');
 
-if(process.argv.length < 4) process.exit();
-
+/**
+ * Run all the steps in required order needed to secure an account (other than verifying its email).
+ */
 const secure = async () => {
     try {
         const { number, id, CountryCode } = await getNumber();
         if(!number || !id || !CountryCode) throw new Error('Missing 1 or more phone number parameters.');
 
         const text = await send(`${CountryCode}${number}`);
-        console.log(text.message);
-
         if(text.message !== 'sent SMS code') throw new Error('SMS code NOT sent!');
 
         const { sms } = await getSMS(id);
-        console.log('Received SMS %s', sms);
-
-        const code = await phone_code(sms);
-        console.log(code.message);
+        await phone_code(sms);
 
         const modified = await Modify({ email: process.argv[2], new_password: process.argv[3] });
-        if(modified) {
-            console.log('User modified, process is finished!');
-        } else {
-            console.log('User was NOT modified!');
-        }
+        console.log(modified);
     } catch(err) {
         console.error('An error occured securing the account:\n', err);
     }
 }
 
+/**
+ * Send a code while also working around rate-limits.
+ * @param {string|number} number Phone number 
+ */
 const send = async number => {
     let p = await phone(number);
     while(p.message === 'You are being rate limited.') {
