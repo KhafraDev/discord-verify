@@ -29,6 +29,7 @@ const secure = async () => {
 const send = async number => {
     let p = await phone(number);
     while(p.message === 'You are being rate limited.') {
+        console.log('rate limited for %d seconds (+10)', Number(p.retry_after / 1000));
         await delay(p.retry_after + 10000); // retry_limit + 10 seconds
         p = await phone(number);
     }

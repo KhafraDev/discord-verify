@@ -21,5 +21,6 @@ module.exports = {
 
     super_properties: super_properties,
     
-    smspva: ''
+    smspva: '',
+    captcha: ''
 }

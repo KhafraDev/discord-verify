@@ -3,6 +3,7 @@ test.*
 old
 *.bak
 config.js
+*.txt
 
 # Logs
 logs
