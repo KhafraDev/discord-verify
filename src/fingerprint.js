@@ -1,6 +1,5 @@
 const fetch = require('node-fetch');
 const { useragent } = require('../config');
-const url = 'https://discordapp.com/api/v6/experiments';
 
 /**
  * Get the X-Fingerprint Header from Discord
@@ -8,7 +7,7 @@ const url = 'https://discordapp.com/api/v6/experiments';
  */
 const fingerprint = async () => {
     try {
-        const res = await fetch(url, {
+        const res = await fetch('https://discordapp.com/api/v6/experiments', {
             headers: {
                 'Accept': '*/*',
                 'Accept-Language': 'en-US',
@@ -20,7 +19,7 @@ const fingerprint = async () => {
             }
         });
 
-        if(res.status === 200 && res.statusText === 'OK') {
+        if(res.status === 200) {
             return res.json();
         } 
         

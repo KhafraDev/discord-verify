@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const { format } = require('util');
 
-const { useragent, super_properties, token, captcha } = require('../config');
+const { useragent, super_properties, captcha } = require('../config');
 const fingerprint = require('./fingerprint');
 
 /**
@@ -15,7 +15,6 @@ const key = '6Lef5iQTAAAAAKeIvIY-DeexoO3gj7ryl9rLMEnn'; // static key
 /**
  * Solve a Captcha and return the key needed to bypass.
  * @param {string} verify_url The Discord verification URL
- * @param {string} k Captcha key 
  */
 const solveCaptcha = async verify_url => {
     const baseURL = format(`https://2captcha.com/in.php?key=%s&method=userrecaptcha&googlekey=%s&pageurl=%s&json=1`, captcha, key, verify_url);
@@ -38,10 +37,12 @@ const solveCaptcha = async verify_url => {
 /**
  * Verify an email.
  * @param {string} verify_url The Discord verification URL
+ * @param {string} token Discord account token.
  */
-const verify = async verify_url => {
-    const token_ = new URL(verify_url).searchParams.get('token');
-    const captcha_key = await solveCaptcha(verify_url);
+const verify = async (verify_url, token) => {
+    const redirect_ = await redirect(verify_url);
+    const token_ = new URL(redirect_).searchParams.get('token');
+    const captcha_key = await solveCaptcha(redirect_);
     const body = JSON.stringify({ 
         token: token_,
         captcha_key: captcha_key
@@ -62,13 +63,18 @@ const verify = async verify_url => {
             'X-Fingerprint': fp.fingerprint,
             'Content-Length': Buffer.from(body).byteLength,
             'Origin': 'https://discordapp.com',
-            'Referer': verify_url
+            'Referer': redirect_
         }
     });
 
     const text = await res.text();
     console.log(text);
     return text;
+}
+
+const redirect = async url => {
+    const res = await fetch(url);
+    return res.url;
 }
 
 module.exports = verify;

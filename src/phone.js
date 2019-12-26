@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const { useragent, super_properties, token, smspva } = require('../config');
+const { useragent, super_properties, smspva } = require('../config');
 
 // const phone_url = 'https://discordapp.com/api/v6/users/@me/phone';
 // const phone_verify_url = 'https://discordapp.com/api/v6/users/@me/phone/verify';
@@ -7,8 +7,9 @@ const { useragent, super_properties, token, smspva } = require('../config');
 /**
  * Send an initial request for a SMS code.
  * @param {string} n Phone number (including country code!)
+ * @param {string} token Discord account token.
  */
-const phone = async n => {
+const phone = async (n, token) => {
     const payload = JSON.stringify({
         phone: n
     });
@@ -42,8 +43,9 @@ const phone = async n => {
 /**
  * Send the SMS code to be verified.
  * @param {number} code 
+ * @param {string} token Discord account token.
  */
-const phone_code = async (code) => {
+const phone_code = async (code, token) => {
     const payload = JSON.stringify({
         code: code
     });
@@ -81,7 +83,7 @@ const getNumber = async () => {
     const url = 'http://smspva.com/priemnik.php?metod=get_number&country=RU&service=opt45&apikey=' + smspva;
 
     const res = await fetch(url);
-    if(res.status == 200) {
+    if(res.status === 200) {
         return res.json();
     } else {
         throw new Error(`Received status ${number.status} (${number.statusText}).`);
