@@ -1,5 +1,5 @@
-const ask = require('../src/util/ask');
-const { getNumber, getSMS, phone, phone_code } = require('../src/phone');
+import ask from '../src/util/ask.js';
+import { getNumber, getSMS, phone, phone_code } from '../src/phone.js';
 
 /**
  * Verify a phone number on an account.

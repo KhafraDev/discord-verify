@@ -1,5 +1,5 @@
-const ask = require('../src/util/ask');
-const join = require('../src/invites');
+import ask from '../src/util/ask.js';
+import join from '../src/invites.js';
 
 const serverJoin = async () => {
     const invites = await ask('List all invite codes here (separated by a space): ');

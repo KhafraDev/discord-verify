@@ -13,3 +13,7 @@
 * Ability to join guilds given an invite code (if you are using the example, you can pass multiple in the program args).
 * Added in [examples](./examples).
 * Removed ``password`` and ``token`` from config. The program will now prompt the user to input these values themself.
+
+# v1.0.4
+* Moved to ESM module loader.
+* Removed `Origin`, `Referer`, and `Content-Length` headers as they are [forbidden headers](https://fetch.spec.whatwg.org/#forbidden-header-name).

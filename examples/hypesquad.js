@@ -4,8 +4,8 @@ const IDs = {
     3: 'Balance'
 }
 
-const ask = require('../src/util/ask');
-const { changeHypesquadHouse } = require('../src/account');
+import ask from '../src/util/ask.js';
+import { changeHypesquadHouse } from '../src/account.js';
 
 const change = async () => {
     const id = await ask('Which House would you like to change to? ');

@@ -1,5 +1,5 @@
-const fetch = require('node-fetch');
-const { useragent, super_properties } = require('../config');
+import fetch from 'node-fetch';
+import { useragent, super_properties } from '../config.js';
 
 /**
  * Join a Discord server.
@@ -23,9 +23,6 @@ const join = async (invite, token) => {
             'X-Context-Properties': ContextProperties,
             'Authorization': token,
             'X-Super-Properties': super_properties,
-            'Origin': 'https://discordapp.com',
-            'Referer': 'https://discordapp.com/invite/' + invite,
-            'Content-Length': 0
         }
     });
 
@@ -57,4 +54,4 @@ const XContextProperties = async code => {
     }
 }
 
-module.exports = join;
+export default join;

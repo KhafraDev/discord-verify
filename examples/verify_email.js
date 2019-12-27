@@ -1,5 +1,5 @@
-const ask = require('../src/util/ask');
-const Verify = require('../src/email');
+import ask from '../src/util/ask.js';
+import Verify from '../src/email.js';
 
 /**
  * Verify it, it's pretty simple.

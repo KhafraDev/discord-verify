@@ -1,6 +1,6 @@
-const ask = require('../src/util/ask');
-const { modify } = require('../src/account');
-const { getNumber, getSMS, phone, phone_code } = require('../src/phone');
+import ask from '../src/util/ask.js';
+import { modify } from '../src/account.js';
+import { getNumber, getSMS, phone, phone_code } from '../src/phone.js';
 
 /**
  * Run all the steps in required order needed to secure an account (other than verifying its email).

@@ -1,8 +1,5 @@
-const fetch = require('node-fetch');
-const { useragent, super_properties, smspva } = require('../config');
-
-// const phone_url = 'https://discordapp.com/api/v6/users/@me/phone';
-// const phone_verify_url = 'https://discordapp.com/api/v6/users/@me/phone/verify';
+import fetch from 'node-fetch';
+import { useragent, super_properties, smspva } from '../config.js';
 
 /**
  * Send an initial request for a SMS code.
@@ -114,9 +111,9 @@ const getSMS = async id => {
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-module.exports = {
+export {
     phone,
     phone_code,
     getNumber,
     getSMS
-};
+}

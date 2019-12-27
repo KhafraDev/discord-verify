@@ -1,5 +1,5 @@
-const fetch = require('node-fetch');
-const { super_properties, useragent } = require('../config');
+import fetch from 'node-fetch';
+import { super_properties, useragent } from '../config.js';
 
 /**
  * Fetch the user object from discord.
@@ -31,9 +31,6 @@ const changeLanguage = async (language, token) => {
             'Content-Type': 'application/json',
             'Authorization': token,
             'X-Super-Properties': super_properties,
-            'Content-Length': Buffer.from(body).byteLength,
-            'Origin': 'https://discordapp.com',
-            'Referer': 'https://discordapp.com/channels/@me/'
         }   
     });
 
@@ -68,9 +65,6 @@ const changeHypesquadHouse = async (id, token) => {
             'Content-Type': 'application/json',
             'Authorization': token,
             'X-Super-Properties': super_properties, 
-            'Content-Length': Buffer.from(body).byteLength,
-            'Origin': 'https://discordapp.com',  
-            'Referer': 'https://discordapp.com/channels/@me'
         }
     });
 
@@ -85,7 +79,7 @@ const changeHypesquadHouse = async (id, token) => {
 /**
  * Modify the user's password, email, and/or language.
  * @param {{ email: string, new_password: string, avatar: string, language: string, token: string, password: string }} options User options
- * @returns {boolean} true|false based on request status 
+ * @returns {Promise<boolean>} true|false based on request status 
  */
 const modify = async ({ email, new_password = null, avatar, language = 'en-US', token, password } = {}) => {
     const userObj = await user(token);
@@ -121,7 +115,7 @@ const modify = async ({ email, new_password = null, avatar, language = 'en-US', 
     }
 }
 
-module.exports = {
+export {
     modify,
     changeHypesquadHouse
-};
+}
