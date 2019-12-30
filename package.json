@@ -1,13 +1,18 @@
 {
   "name": "discord-verify",
-  "version": "1.0.4",
+  "version": "1.0.1",
   "description": "Verify and secure Discord accounts.",
-  "type": "module",
   "main": "examples/secure.js",
   "dependencies": {
-    "node-fetch": "^2.6.0"
+    "@types/prompts": "^2.0.3",
+    "prompts": "^2.3.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^13.1.1",
+    "@types/node-fetch": "^2.5.4",
+    "node-fetch": "^2.6.0",
+    "typescript": "^3.7.4"
+  },
   "scripts": {
     "test": "node -e \"console.log('No testing command, sorry')\""
   },

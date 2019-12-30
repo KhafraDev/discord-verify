@@ -1,10 +1,11 @@
 import fetch from 'node-fetch';
 import { super_properties, useragent } from '../config.js';
+import { IModify, IModifyUser } from './types/index';
 
 /**
  * Fetch the user object from discord.
  */
-const user = async token => {
+const user = async (token: string): Promise<IModifyUser> => {
     const res = await fetch('https://discordapp.com/api/v6/users/@me', {
         headers: {
             Authorization: token
@@ -18,7 +19,13 @@ const user = async token => {
     }
 }
 
-const changeLanguage = async (language, token) => {
+/**
+ * Change a user's language
+ * @param {string} language 
+ * @param {string} token 
+ * @returns {Promise<object|string>} Response object
+ */
+const changeLanguage = async (language: string, token: string): Promise<object|string> => {
     const body = JSON.stringify({ locale: language });
     const res = await fetch('https://discordapp.com/api/v6/users/@me/settings', {
         method: 'PATCH',
@@ -51,8 +58,9 @@ const changeLanguage = async (language, token) => {
  * }
  * @param {number} id 1, 2, or 3
  * @param {string} token Discord account token.
+ * @returns {Promise<boolean>}
  */
-const changeHypesquadHouse = async (id, token) => {
+const changeHypesquadHouse = async (id: string, token: string): Promise<boolean> => {
     const body = JSON.stringify({ house_id: Number(id) >= 1 && Number(id) <= 3 ? id : 1 });
     const res = await fetch('https://discordapp.com/api/v6/hypesquad/online', {
         method: 'POST',
@@ -78,12 +86,12 @@ const changeHypesquadHouse = async (id, token) => {
 
 /**
  * Modify the user's password, email, and/or language.
- * @param {{ email: string, new_password: string, avatar: string, language: string, token: string, password: string }} options User options
- * @returns {Promise<boolean>} true|false based on request status 
+ * @param {object} options User options
+ * @returns {Promise<object>} User object
  */
-const modify = async ({ email, new_password = null, avatar, language = 'en-US', token, password } = {}) => {
+const modify = async ({ email, new_password, avatar, language, token, password }: IModify): Promise<object> => {
     const userObj = await user(token);
-    await changeLanguage(language);
+    await changeLanguage(language || 'en-US', token);
 
     const body = JSON.stringify({
         username: userObj.username,
@@ -108,11 +116,7 @@ const modify = async ({ email, new_password = null, avatar, language = 'en-US', 
         }
     });
 
-    try {
-        return res.json();
-    } catch {
-        return res.text(); // ????
-    }
+    return res.json();
 }
 
 export {

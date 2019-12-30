@@ -1,12 +1,17 @@
-import ask from '../src/util/ask.js';
-import { getNumber, getSMS, phone, phone_code } from '../src/phone.js';
+import { getNumber, getSMS, phone, phone_code } from '../src/phone';
+import prompts = require('prompts');
+import { resolve } from 'dns';
 
 /**
  * Verify a phone number on an account.
  * Useful if you do not wish to modify the user or locked out of your own account because of phone verification.
  */
 const phoneVerify = async () => {
-    const token = await ask('Post your account token here: ');
+    const { token } = await prompts({
+        type: 'text',
+        name: 'token',
+        message: 'Discord Token:'
+    });
 
     const { number, id, CountryCode } = await getNumber();
     if(!number || !id || !CountryCode) throw new Error('Missing 1 or more phone number parameters.');
@@ -17,15 +22,16 @@ const phoneVerify = async () => {
     const { sms } = await getSMS(id);
     await phone_code(sms, token);
 
-    console.log('finished.');
+    console.log('Verified phone number!');
 }
 
 /**
  * Send in a request or wait until you are no longer rate-limited.
  * @param {string} number Phone number used
  * @param {string} token Discord account token.
+ * @returns {Promise<{ message: string }>}
  */
-const send = async (number, token) => {
+const send = async (number: string, token: string): Promise<{ message: string }> => {
     let p = await phone(number, token);
     while(p.message === 'You are being rate limited.') {
         console.log('rate limited for %d seconds (+10)', Number(p.retry_after / 1000));
@@ -35,5 +41,7 @@ const send = async (number, token) => {
 
     return { message: 'sent SMS code' };
 }
+
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 phoneVerify();

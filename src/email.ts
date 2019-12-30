@@ -1,20 +1,21 @@
 import fetch from 'node-fetch';
 
-import { useragent, super_properties } from '../config.js';
-import fingerprint from './fingerprint.js';
-import solveCaptcha from './util/solve_captcha.js';
+import { useragent, super_properties } from '../config';
+import fingerprint from './fingerprint';
+import solveCaptcha from './util/solve_captcha';
 
 /**
  * Verify an email.
  * @param {string} verify_url The Discord verification URL
  * @param {string} token Discord account token.
+ * @returns {Promise<string>} 
  */
-const verify = async (verify_url, token) => {
-    const redirect_ = await redirect(verify_url);
-    const token_ = new URL(redirect_).searchParams.get('token');
-    const captcha_key = await solveCaptcha(redirect_);
+const verify = async (verify_url: string, token: string): Promise<string> => {
+    const redirect_url = await redirect(verify_url);
+    const token_param: string = new URL(redirect_url.replace(/verify#token/g, 'verify?token')).searchParams.get('token');
+    const captcha_key = await solveCaptcha(redirect_url);
     const body = JSON.stringify({ 
-        token: token_,
+        token: token_param,
         captcha_key: captcha_key
     });
     
@@ -34,12 +35,10 @@ const verify = async (verify_url, token) => {
         }
     });
 
-    const text = await res.text();
-    console.log(text);
-    return text;
+    return res.text();
 }
 
-const redirect = async url => {
+const redirect = async (url: string): Promise<string> => {
     const res = await fetch(url);
     return res.url;
 }

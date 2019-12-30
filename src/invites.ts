@@ -1,12 +1,12 @@
 import fetch from 'node-fetch';
-import { useragent, super_properties } from '../config.js';
+import { useragent, super_properties } from '../config';
 
 /**
  * Join a Discord server.
  * @param {string} invite Invite code to the server 
  * @param {string} token Discord account token.
  */
-const join = async (invite, token) => {
+const join = async (invite: string, token: string) => {
     const ContextProperties = await XContextProperties(invite);
     if(typeof ContextProperties !== 'string') {
         throw new Error(JSON.stringify(ContextProperties));
@@ -38,7 +38,7 @@ const join = async (invite, token) => {
  * @param {string} code The invite code
  * @returns {Promise<string>} X-Context-Properties header string
  */
-const XContextProperties = async code => {
+const XContextProperties = async (code: string): Promise<string> => {
     const res = await fetch('https://discordapp.com/api/v6/invites/' + code);
     
     const json = await res.json(); // even errors are in json format

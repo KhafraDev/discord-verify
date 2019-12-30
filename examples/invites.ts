@@ -1,9 +1,19 @@
-import ask from '../src/util/ask.js';
 import join from '../src/invites.js';
+import prompts = require('prompts');
 
 const serverJoin = async () => {
-    const invites = await ask('List all invite codes here (separated by a space): ');
-    const token = await ask('Post your account token here: ');
+    const { invites, token } = await prompts([
+        {
+            type: 'text',
+            name: 'invites',
+            message: 'Invites separated by a space:'
+        },
+        {
+            type: 'text',
+            name: 'token',
+            message: 'Discord Token:'
+        }
+    ]);
 
     for(const i of invites.split(/\s+/g)) {
         const res = await join(i.trim(), token);

@@ -1,27 +1,24 @@
 import fetch from 'node-fetch';
-import { useragent, super_properties, smspva } from '../config.js';
+import { useragent, super_properties, smspva } from '../config';
+import { IPhoneSuccess } from './types/index';
 
 /**
  * Send an initial request for a SMS code.
  * @param {string} n Phone number (including country code!)
  * @param {string} token Discord account token.
+ * @returns {Promise<IPhoneSuccess>}
  */
-const phone = async (n, token) => {
-    const payload = JSON.stringify({
-        phone: n
-    });
+const phone = async (n: string, token: string): Promise<IPhoneSuccess> => {
+    const body = JSON.stringify({ phone: n });
 
     const res = await fetch('https://discordapp.com/api/v6/users/@me/phone', {
         method: 'POST',
-        body: payload,
+        body: body,
         headers: {
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Content-Type': 'application/json',
-            'Content-Length': Buffer.from(payload).byteLength,
             'Host': 'discordapp.com',
-            'Origin': 'https://discordapp.com',
-            'Referer': 'https://discordapp.com/channels/@me',
             'User-Agent': useragent,
             'Authorization': token,
             'X-Super-Properties': super_properties
@@ -41,22 +38,19 @@ const phone = async (n, token) => {
  * Send the SMS code to be verified.
  * @param {number} code 
  * @param {string} token Discord account token.
+ * @returns {Promise<boolean>}
  */
-const phone_code = async (code, token) => {
-    const payload = JSON.stringify({
-        code: code
-    });
+const phone_code = async (code: number, token: string): Promise<boolean> => {
+    const body = JSON.stringify({ code: code });
 
     const res = await fetch('https://discordapp.com/api/v6/users/@me/phone/verify', {
         method: 'POST',
-        body: payload,
+        body: body,
         headers: {
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Content-Type': 'application/json',
-            'Content-Length': Buffer.from(payload).byteLength,
             'Host': 'discordapp.com',
-            'Referer': 'https://discordapp.com/channels/@me',
             'User-Agent': useragent,
             'Authorization': token,
             'X-Super-Properties': super_properties
@@ -66,9 +60,9 @@ const phone_code = async (code, token) => {
     const text = await res.text();
 
     if(text === '') { // empty response, sent SMS code
-        return { message: 'verified SMS code!' };
+        return true;
     } else {
-        return JSON.parse(text); // ????
+        return false // ????
     }
 }
 
@@ -77,13 +71,12 @@ const phone_code = async (code, token) => {
  * @returns {Object} Object
  */
 const getNumber = async () => {
-    const url = 'http://smspva.com/priemnik.php?metod=get_number&country=RU&service=opt45&apikey=' + smspva;
+    const res = await fetch('http://smspva.com/priemnik.php?metod=get_number&country=RU&service=opt45&apikey=' + smspva);
 
-    const res = await fetch(url);
     if(res.status === 200) {
         return res.json();
     } else {
-        throw new Error(`Received status ${number.status} (${number.statusText}).`);
+        throw new Error(`Received status ${res.status} (${res.statusText}).`);
     }
 }
 
@@ -92,7 +85,7 @@ const getNumber = async () => {
  * @param {number} id 
  * @returns {Object} Object
  */
-const getSMS = async id => {
+const getSMS = async (id: number) => {
     const url = 'http://smspva.com/priemnik.php?metod=get_sms&country=ru&service=opt45&apikey=' + smspva + '&id=' + id;
 
     for(let MAX_RETRIES = 7; MAX_RETRIES > 0; MAX_RETRIES--) {
@@ -109,7 +102,7 @@ const getSMS = async id => {
     throw new Error('No SMS received from Discord!');
 }
 
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export {
     phone,

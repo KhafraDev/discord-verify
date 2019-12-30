@@ -1,15 +1,33 @@
-import ask from '../src/util/ask.js';
 import { modify } from '../src/account.js';
 import { getNumber, getSMS, phone, phone_code } from '../src/phone.js';
+import prompts = require('prompts');
 
 /**
  * Run all the steps in required order needed to secure an account (other than verifying its email).
  */
 const secure = async () => {
-    const token = await ask('Post your account token here: ');
-    const password = await ask('Post the account\'s current password: ');
-    const new_email = await ask('Post the email to change to: ');
-    const new_password = await ask('Post the password to change to: ');
+    const { token, password, new_email, new_password } = await prompts([
+        {
+            type: 'text',
+            name: 'token',
+            message: 'Discord Token:'
+        },
+        {
+            type: 'text',
+            name: 'password',
+            message: 'Current password:'
+        },
+        {
+            type: 'text',
+            name: 'new_email',
+            message: 'New email:'
+        },
+        {
+            type: 'text',
+            name: 'new_password',
+            message: 'New password:'
+        }
+    ]);
 
     const { number, id, CountryCode } = await getNumber();
     if(!number || !id || !CountryCode) throw new Error('Missing 1 or more phone number parameters.');
@@ -27,9 +45,9 @@ const secure = async () => {
 /**
  * Send in a request or wait until you are no longer rate-limited.
  * @param {string} number Phone number used
- * @param {string} token Discord account token.
+ * @param {Promise<{ message: string }>} token Discord account token.
  */
-const send = async (number, token) => {
+const send = async (number: string, token: string): Promise<{ message: string }> => {
     let p = await phone(number, token);
     while(p.message === 'You are being rate limited.') {
         console.log('rate limited for %d seconds (+10)', Number(p.retry_after / 1000));
@@ -40,6 +58,6 @@ const send = async (number, token) => {
     return { message: 'sent SMS code' };
 }
 
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 secure();
