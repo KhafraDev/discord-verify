@@ -1,11 +1,12 @@
 import fetch from 'node-fetch';
-import { useragent } from '../config.js';
+import { useragent } from '../config';
+import { IFingerprint } from './types/index';
 
 /**
  * Get the X-Fingerprint Header from Discord
- * @returns {Object} res.json() result.
+ * @returns {Promise<IFingerprint>} Fingerprint object.
  */
-const fingerprint = async () => {
+const fingerprint = async (): Promise<IFingerprint> => {
     const ContextProperties = Buffer.from(JSON.stringify({ location: 'Login' })).toString('base64')
     const res = await fetch('https://discordapp.com/api/v6/experiments', {
         headers: {
