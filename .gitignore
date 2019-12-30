@@ -5,4 +5,3 @@ old
 *.txt
 node_modules
 config.ts
-examples

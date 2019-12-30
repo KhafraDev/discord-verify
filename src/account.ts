@@ -1,12 +1,11 @@
 import fetch from 'node-fetch';
 import { super_properties, useragent } from '../config.js';
-import { IModify, IChangeLanguageResponse } from './types/index';
-import { User } from 'discord.js';
+import { IModify, IModifyUser } from './types/index';
 
 /**
  * Fetch the user object from discord.
  */
-const user = async (token: string): Promise<User> => {
+const user = async (token: string): Promise<IModifyUser> => {
     const res = await fetch('https://discordapp.com/api/v6/users/@me', {
         headers: {
             Authorization: token
@@ -24,9 +23,9 @@ const user = async (token: string): Promise<User> => {
  * Change a user's language
  * @param {string} language 
  * @param {string} token 
- * @returns {IChangeLanguageResponse} Response object
+ * @returns {Promise<object|string>} Response object
  */
-const changeLanguage = async (language: string, token: string): Promise<IChangeLanguageResponse> => {
+const changeLanguage = async (language: string, token: string): Promise<object|string> => {
     const body = JSON.stringify({ locale: language });
     const res = await fetch('https://discordapp.com/api/v6/users/@me/settings', {
         method: 'PATCH',
@@ -88,9 +87,9 @@ const changeHypesquadHouse = async (id: string, token: string): Promise<boolean>
 /**
  * Modify the user's password, email, and/or language.
  * @param {object} options User options
- * @returns {Promise<User>} User object
+ * @returns {Promise<object>} User object
  */
-const modify = async ({ email, new_password, avatar, language, token, password }: IModify): Promise<User> => {
+const modify = async ({ email, new_password, avatar, language, token, password }: IModify): Promise<object> => {
     const userObj = await user(token);
     await changeLanguage(language || 'en-US', token);
 

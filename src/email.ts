@@ -11,11 +11,11 @@ import solveCaptcha from './util/solve_captcha';
  * @returns {Promise<string>} 
  */
 const verify = async (verify_url: string, token: string): Promise<string> => {
-    const redirect_ = await redirect(verify_url);
-    const token_: string = new URL(redirect_).searchParams.get('token');
-    const captcha_key = await solveCaptcha(redirect_);
+    const redirect_url = await redirect(verify_url);
+    const token_param: string = new URL(redirect_url.replace(/verify#token/g, 'verify?token')).searchParams.get('token');
+    const captcha_key = await solveCaptcha(redirect_url);
     const body = JSON.stringify({ 
-        token: token_,
+        token: token_param,
         captcha_key: captcha_key
     });
     

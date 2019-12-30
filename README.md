@@ -6,14 +6,18 @@ Verify and secure Discord accounts.
 * node-fetch, ``npm i node-fetch``.
 * SMSPVA API key.
 
+# Requirements
+* NodeJS (tested on v13.5.0) and NPM.
+* ``typescript``, ``node-fetch``, and ``prompts``.
+* 2captcha API key.
+* SMSPVA API key.
+* Account's token and password minimum.
+
 # How to Use
-1. Clone this repo to a folder of your choosing. 
-2. Go to the folder and open the [config](./config.example.js) file. If you change the useragent, you must also change the values in super_properties.
-3. Run the program with the required arguments, for example: ``node secure.js new_email@gmail.com new_password``.
+1. Clone this repo to a folder of your choosing and cd to the folder. 
+2. Install the dependencies using: ``npm i --save-dev typescript node-fetch @types/node-fetch @types/prompts``.
+3. Open the [config](./config.example.ts) file. I recommend editing the super_properties values, including user-agent, but do not change the keys.
+4. Rename ``config.example.ts`` to ``config.ts``.
+5. Compile the typescript using: ``tsc /path/to/file``. For example, to secure an account run: ``tsc examples/secure``.
+6. Run the compiled JS using: ``node /path/to/file``. For example, ``node examples/secure``.
 
-# No Captcha? 
-The program doesn't require Captcha because it makes direct calls to the Discord API. Instead of verifying using Captcha, an Authorization header is used to verify the account is real.
-
-# WIP
-* Automation
-* Proxy support ([node-https-proxy-agent](https://github.com/TooTallNate/node-https-proxy-agent)?)

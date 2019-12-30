@@ -9,21 +9,16 @@ import { IPhoneSuccess } from './types/index';
  * @returns {Promise<IPhoneSuccess>}
  */
 const phone = async (n: string, token: string): Promise<IPhoneSuccess> => {
-    const payload = JSON.stringify({
-        phone: n
-    });
+    const body = JSON.stringify({ phone: n });
 
     const res = await fetch('https://discordapp.com/api/v6/users/@me/phone', {
         method: 'POST',
-        body: payload,
+        body: body,
         headers: {
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Content-Type': 'application/json',
-            'Content-Length': Buffer.from(payload).byteLength,
             'Host': 'discordapp.com',
-            'Origin': 'https://discordapp.com',
-            'Referer': 'https://discordapp.com/channels/@me',
             'User-Agent': useragent,
             'Authorization': token,
             'X-Super-Properties': super_properties
@@ -46,20 +41,16 @@ const phone = async (n: string, token: string): Promise<IPhoneSuccess> => {
  * @returns {Promise<boolean>}
  */
 const phone_code = async (code: number, token: string): Promise<boolean> => {
-    const payload = JSON.stringify({
-        code: code
-    });
+    const body = JSON.stringify({ code: code });
 
     const res = await fetch('https://discordapp.com/api/v6/users/@me/phone/verify', {
         method: 'POST',
-        body: payload,
+        body: body,
         headers: {
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Content-Type': 'application/json',
-            'Content-Length': Buffer.from(payload).byteLength,
             'Host': 'discordapp.com',
-            'Referer': 'https://discordapp.com/channels/@me',
             'User-Agent': useragent,
             'Authorization': token,
             'X-Super-Properties': super_properties
