@@ -4,4 +4,5 @@ old
 *.bak
 *.txt
 node_modules
-config.ts
+config.*
+test*
