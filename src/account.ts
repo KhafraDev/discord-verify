@@ -1,11 +1,11 @@
 import fetch from 'node-fetch';
 import { super_properties, useragent } from '../config.js';
-import { IModify, IModifyUser } from './types/index';
+import { ModifyOptions, User, ChangeLanguage, ModifyReturn } from 'discord-verify';
 
 /**
  * Fetch the user object from discord.
  */
-const user = async (token: string): Promise<IModifyUser> => {
+const user = async (token: string): Promise<User> => {
     const res = await fetch('https://discordapp.com/api/v6/users/@me', {
         headers: {
             Authorization: token
@@ -23,9 +23,8 @@ const user = async (token: string): Promise<IModifyUser> => {
  * Change a user's language
  * @param {string} language 
  * @param {string} token 
- * @returns {Promise<object|string>} Response object
  */
-const changeLanguage = async (language: string, token: string): Promise<object|string> => {
+const changeLanguage = async (language: string, token: string): Promise<ChangeLanguage> => {
     const body = JSON.stringify({ locale: language });
     const res = await fetch('https://discordapp.com/api/v6/users/@me/settings', {
         method: 'PATCH',
@@ -41,11 +40,7 @@ const changeLanguage = async (language: string, token: string): Promise<object|s
         }   
     });
 
-    if(res.status === 200) {
-        return res.json();
-    } else {
-        return res.text();
-    }
+    return res.json();
 }
 
 /**
@@ -77,8 +72,7 @@ const changeHypesquadHouse = async (id: string, token: string): Promise<boolean>
     });
 
     if(res.status === 204) {
-        const success = (await res.text()) === '';
-        return success;
+        return (await res.text()) === '';
     } else {
         return false;
     }
@@ -87,9 +81,8 @@ const changeHypesquadHouse = async (id: string, token: string): Promise<boolean>
 /**
  * Modify the user's password, email, and/or language.
  * @param {object} options User options
- * @returns {Promise<object>} User object
  */
-const modify = async ({ email, new_password, avatar, language, token, password }: IModify): Promise<object> => {
+const modify = async ({ email, new_password, avatar, language, token, password }: ModifyOptions): Promise<ModifyReturn> => {
     const userObj = await user(token);
     await changeLanguage(language || 'en-US', token);
 

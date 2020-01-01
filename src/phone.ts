@@ -1,14 +1,13 @@
 import fetch from 'node-fetch';
 import { useragent, super_properties, smspva } from '../config';
-import { IPhoneSuccess } from './types/index';
+import { PhoneNumber, SMS, TextRequest } from 'discord-verify';
 
 /**
  * Send an initial request for a SMS code.
  * @param {string} n Phone number (including country code!)
  * @param {string} token Discord account token.
- * @returns {Promise<IPhoneSuccess>}
  */
-const phone = async (n: string, token: string): Promise<IPhoneSuccess> => {
+const phone = async (n: string, token: string): Promise<TextRequest> => {
     const body = JSON.stringify({ phone: n });
 
     const res = await fetch('https://discordapp.com/api/v6/users/@me/phone', {
@@ -38,9 +37,8 @@ const phone = async (n: string, token: string): Promise<IPhoneSuccess> => {
  * Send the SMS code to be verified.
  * @param {number} code 
  * @param {string} token Discord account token.
- * @returns {Promise<boolean>}
  */
-const phone_code = async (code: number, token: string): Promise<boolean> => {
+const phone_code = async (code: string, token: string): Promise<boolean> => {
     const body = JSON.stringify({ code: code });
 
     const res = await fetch('https://discordapp.com/api/v6/users/@me/phone/verify', {
@@ -68,9 +66,8 @@ const phone_code = async (code: number, token: string): Promise<boolean> => {
 
 /**
  * Get a phone number to send the SMS to
- * @returns {Object} Object
  */
-const getNumber = async () => {
+const getNumber = async (): Promise<PhoneNumber> => {
     const res = await fetch('http://smspva.com/priemnik.php?metod=get_number&country=RU&service=opt45&apikey=' + smspva);
 
     if(res.status === 200) {
@@ -83,9 +80,8 @@ const getNumber = async () => {
 /**
  * Get the SMS messages
  * @param {number} id 
- * @returns {Object} Object
  */
-const getSMS = async (id: number) => {
+const getSMS = async (id: number): Promise<SMS> => {
     const url = 'http://smspva.com/priemnik.php?metod=get_sms&country=ru&service=opt45&apikey=' + smspva + '&id=' + id;
 
     for(let MAX_RETRIES = 7; MAX_RETRIES > 0; MAX_RETRIES--) {

@@ -32,7 +32,7 @@ const solveCaptcha = async (verify_url: string): Promise<string> => {
         text = text === 'CAPCHA_NOT_READY' || text.substring(0, 3) !== 'OK|' ? null : text;
     }
 
-    return text.substring(3);
+    return text.substring(3); // OK|[ID]
 }
 
 export default solveCaptcha;

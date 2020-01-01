@@ -17,7 +17,7 @@ const change = async () => {
     ])
 
     const res = await changeHypesquadHouse(id, token);
-    console.log('%s', res ? 'Changed houses!' : 'Did not change houses!');
+    console.log(res ? 'Changed houses!' : 'Did not change houses!');
 }
 
 change();

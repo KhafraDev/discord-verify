@@ -1,12 +1,13 @@
 import fetch from 'node-fetch';
 import { useragent, super_properties } from '../config';
+import { Guild } from 'discord-verify';
 
 /**
  * Join a Discord server.
  * @param {string} invite Invite code to the server 
  * @param {string} token Discord account token.
  */
-const join = async (invite: string, token: string) => {
+const join = async (invite: string, token: string): Promise<Guild|false> => {
     const ContextProperties = await XContextProperties(invite);
     if(typeof ContextProperties !== 'string') {
         throw new Error(JSON.stringify(ContextProperties));
@@ -36,7 +37,6 @@ const join = async (invite: string, token: string) => {
 /**
  * Get a guild object given an invite code required for ``X-Context-Properties``.
  * @param {string} code The invite code
- * @returns {Promise<string>} X-Context-Properties header string
  */
 const XContextProperties = async (code: string): Promise<string> => {
     const res = await fetch('https://discordapp.com/api/v6/invites/' + code);

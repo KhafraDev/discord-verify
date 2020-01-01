@@ -43,4 +43,30 @@ const redirect = async (url: string): Promise<string> => {
     return res.url;
 }
 
-export default verify;
+/**
+ * Resend email-confirmation email.
+ * @param {string} token Discord Token.
+ */
+const confirmation = async (token: string): Promise<boolean> => {
+    const fp = await fingerprint();
+    const res = await fetch('https://discordapp.com/api/v6/auth/verify/resend', {
+        method: 'POST',
+        headers: {
+            'Host': 'discordapp.com',
+            'User-Agent': useragent,
+            'Accept': '*/*',
+            'Accept-Language': 'en-US',
+            'Authorization': token,
+            'X-Super-Properties': super_properties,
+            'X-Fingerprint': fp.fingerprint
+        }
+    });
+
+    return (await res.text()) === '' ? true : false;
+}
+
+
+export {
+    verify,
+    confirmation
+};
