@@ -8,6 +8,10 @@
 * Replace ``khafradev/ask`` with ``prompts`` as it is more complete and feature-rich.
 
 # v1.0.2
-* Re-send email-confirmation email. (**Untested**)
+* Re-send email-confirmation email.
 * Actual typings now.
 * Determined return types for all functions.
+
+# v1.0.3
+* Module to test an available name or change an account's name.
+* Added "complete_secure" example which will handle parts of email verification. (**Untested**)

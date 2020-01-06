@@ -59,12 +59,13 @@ declare module 'discord-verify' {
     }
 
     interface ModifyOptions {
-        email: string;
-        new_password: string;
+        password: string;
+        token: string; // required as a header
+        email?: string;
+        new_password?: string;
+        username?: string;
         avatar?: string;
         language?: string;
-        token: string;
-        password: string;
     }
 
     interface ChangeLanguage {
@@ -151,4 +152,5 @@ declare module 'discord-verify' {
     export const phone_code: (code: number, token: string) => Promise<boolean>;
     export const getNumber: () => Promise<PhoneNumber>;
     export const getSMS: (id: number) => Promise<SMS>;
+    export const check: (name: string, token: string) => Promise<boolean|string>;
 }

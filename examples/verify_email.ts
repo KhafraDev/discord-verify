@@ -20,6 +20,7 @@ const Verify = async () => {
     ]);
 
     const res = await verify(url, token);
+    console.log(res);
 }
 
 Verify();

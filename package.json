@@ -1,6 +1,6 @@
 {
   "name": "discord-verify",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Verify and secure Discord accounts.",
   "main": "examples/secure.js",
   "dependencies": {

@@ -82,17 +82,17 @@ const changeHypesquadHouse = async (id: string, token: string): Promise<boolean>
  * Modify the user's password, email, and/or language.
  * @param {object} options User options
  */
-const modify = async ({ email, new_password, avatar, language, token, password }: ModifyOptions): Promise<ModifyReturn> => {
+const modify = async ({ username, email, new_password, avatar, language, token, password }: ModifyOptions): Promise<ModifyReturn> => {
     const userObj = await user(token);
     await changeLanguage(language || 'en-US', token);
 
     const body = JSON.stringify({
-        username: userObj.username,
+        username: username || userObj.username,
         email: email || userObj.email,
         password: password,
-        avatar: avatar || userObj.avatar,
+        avatar: avatar || userObj.avatar || null,
         discriminator: null,
-        new_password: new_password
+        new_password: new_password || null
     });
 
     const res = await fetch('https://discordapp.com/api/v6/users/@me', {
