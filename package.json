@@ -1,11 +1,13 @@
 {
   "name": "discord-verify",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Verify and secure Discord accounts.",
   "main": "examples/secure.js",
   "dependencies": {
     "@types/prompts": "^2.0.3",
-    "prompts": "^2.3.0"
+    "@types/user-agents": "^1.0.0",
+    "prompts": "^2.3.0",
+    "user-agents": "^1.0.494"
   },
   "devDependencies": {
     "@types/node": "^13.1.1",

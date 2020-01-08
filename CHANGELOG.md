@@ -14,4 +14,8 @@
 
 # v1.0.3
 * Module to test an available name or change an account's name.
-* Added "complete_secure" example which will handle parts of email verification. (**Untested**)
+* Added "complete_secure" example which will handle parts of email verification.
+
+# v1.0.4
+* Use ``user-agents`` to generate a random UserAgent for the X-Super-Properties header.
+* Eventually move X-Super-Properties into its own file (refactoring).
