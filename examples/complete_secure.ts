@@ -7,7 +7,7 @@ import prompts = require('prompts');
  * Run all the steps in required order needed to secure an account (other than verifying its email).
  */
 const secure = async () => {
-    const { token, password, new_email, new_password } = await prompts([
+    const { token, password, new_email, new_password, url } = await prompts([
         {
             type: 'text',
             name: 'token',
@@ -27,21 +27,36 @@ const secure = async () => {
             type: 'text',
             name: 'new_password',
             message: 'New password:'
+        },
+        {
+            type: 'text',
+            name: 'url',
+            message: 'Email Verification URL:'
         }
     ]);
 
     const { number, id, CountryCode } = await getNumber();
-    if(!number || !id || !CountryCode) throw new Error('Missing 1 or more phone number parameters.');
+    if(!number || !id || !CountryCode) { 
+        throw new Error('Missing 1 or more phone number parameters.');
+    }
 
     const text = await send(`${CountryCode}${number}`, token);
-    if(text.message !== 'sent SMS code') throw new Error('SMS code NOT sent!');
+    if(text.message !== 'sent SMS code') {
+        throw new Error('SMS code NOT sent!');
+    }
 
     const { sms } = await getSMS(id);
     await phone_code(sms, token);
 
-    const modified = await modify({ email: new_email, new_password: new_password, password: password, token: token });
-    console.log(modified);
-    return Verify(modified.token);
+    const modified = await modify({ 
+        email: new_email, 
+        new_password: new_password, 
+        password: password, 
+        token: token 
+    });
+
+    await verify(url, modified.token);
+    console.log('Account is secured.', modified);
 }
 
 /**
@@ -61,20 +76,5 @@ const send = async (number: string, token: string): Promise<{ message: string }>
 }
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-/**
- * Verify an account's email.
- * @param {string} token Discord Token.
- */
-const Verify = async (token: string) => {
-    const { url } = await prompts({
-        type: 'text',
-        name: 'url',
-        message: 'Email Verification URL:'
-    });
-
-    const res = await verify(url, token);
-    console.log(res);
-}
 
 secure();

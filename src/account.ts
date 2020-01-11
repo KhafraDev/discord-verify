@@ -114,5 +114,6 @@ const modify = async ({ username, email, new_password, avatar, language, token, 
 
 export {
     modify,
-    changeHypesquadHouse
+    changeHypesquadHouse,
+    user
 }

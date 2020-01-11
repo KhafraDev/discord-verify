@@ -1,7 +1,7 @@
 import join from '../src/invites.js';
 import prompts = require('prompts');
 
-const serverJoin = async () => {
+(async () => {
     const { invites, token } = await prompts([
         {
             type: 'text',
@@ -19,6 +19,4 @@ const serverJoin = async () => {
         const res = await join(i.trim(), token);
         console.log(res ? `Joined guild ${res.guild.name} (${res.guild.id})!` : `Did not join guild ${i}.`);
     }
-}
-
-serverJoin();
+})();

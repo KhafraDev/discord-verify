@@ -1,29 +1,5 @@
 import { getNumber, getSMS, phone, phone_code } from '../src/phone';
 import prompts = require('prompts');
-import { resolve } from 'dns';
-
-/**
- * Verify a phone number on an account.
- * Useful if you do not wish to modify the user or locked out of your own account because of phone verification.
- */
-const phoneVerify = async () => {
-    const { token } = await prompts({
-        type: 'text',
-        name: 'token',
-        message: 'Discord Token:'
-    });
-
-    const { number, id, CountryCode } = await getNumber();
-    if(!number || !id || !CountryCode) throw new Error('Missing 1 or more phone number parameters.');
-
-    const text = await send(`${CountryCode}${number}`, token);
-    if(text.message !== 'sent SMS code') throw new Error('SMS code NOT sent!');
-
-    const { sms } = await getSMS(id);
-    await phone_code(sms, token);
-
-    console.log('Verified phone number!');
-}
 
 /**
  * Send in a request or wait until you are no longer rate-limited.
@@ -44,4 +20,21 @@ const send = async (number: string, token: string): Promise<{ message: string }>
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-phoneVerify();
+(async () => {
+    const { token } = await prompts({
+        type: 'text',
+        name: 'token',
+        message: 'Discord Token:'
+    });
+
+    const { number, id, CountryCode } = await getNumber();
+    if(!number || !id || !CountryCode) throw new Error('Missing 1 or more phone number parameters.');
+
+    const text = await send(`${CountryCode}${number}`, token);
+    if(text.message !== 'sent SMS code') throw new Error('SMS code NOT sent!');
+
+    const { sms } = await getSMS(id);
+    await phone_code(sms, token);
+
+    console.log('Verified phone number!');
+})();

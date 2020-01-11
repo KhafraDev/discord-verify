@@ -6,3 +6,4 @@ old
 node_modules
 config.*
 test*
+!test_token.ts

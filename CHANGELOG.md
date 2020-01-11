@@ -19,3 +19,7 @@
 # v1.0.4
 * Use ``user-agents`` to generate a random UserAgent for the X-Super-Properties header.
 * Eventually move X-Super-Properties into its own file (refactoring).
+
+# v1.0.5
+* Add in ``test_token`` example module which allows you to test whether or not a token is valid before securing an account. The function was already available, but was not exported previously.
+* Re-wrote Captcha solving module to be more reliable and accurate.

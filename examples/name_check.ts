@@ -1,6 +1,5 @@
 import check from '../src/name';
 import prompts = require('prompts');
-import { resolve } from 'dns';
 
 const Check = async () => {
     const { username, password, token, run } = await prompts([
@@ -29,12 +28,12 @@ const Check = async () => {
     for(let i = 0; i < run; i++) {
         const res = await check(username, password, token);
         if(typeof res === 'string') {
-            console.log('%d. %s', i, res);
+            console.log('%d. %s', i + 1, res);
         } else {
-            console.log('%d. Changed usernames!', i);
+            console.log('%d. Changed usernames!', i + 1);
             break; // exit for loop
         }
-        await delay(Math.floor(Math.random() * (7000 - 2000 + 1) + 2000)); // delay anywhere from 7 seconds to 2 seconds.
+        await delay(Math.floor(Math.random() * (2000 - 1000 + 1) + 1000)); // delay anywhere from 1 second to 2 seconds.
     }
 }
 

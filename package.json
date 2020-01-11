@@ -1,8 +1,7 @@
 {
   "name": "discord-verify",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Verify and secure Discord accounts.",
-  "main": "examples/secure.js",
   "dependencies": {
     "@types/prompts": "^2.0.3",
     "@types/user-agents": "^1.0.0",
@@ -15,9 +14,7 @@
     "node-fetch": "^2.6.0",
     "typescript": "^3.7.4"
   },
-  "scripts": {
-    "test": "node -e \"console.log('No testing command, sorry')\""
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/khafradev/discord-verify.git"

@@ -1,7 +1,7 @@
 import { changeHypesquadHouse } from '../src/account.js';
 import prompts = require('prompts');
 
-const change = async () => {
+(async () => {
     const { id, token } = await prompts([
         {
             type: 'text',
@@ -18,6 +18,4 @@ const change = async () => {
 
     const res = await changeHypesquadHouse(id, token);
     console.log(res ? 'Changed houses!' : 'Did not change houses!');
-}
-
-change();
+})();
