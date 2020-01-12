@@ -1,63 +1,9 @@
 import { modify } from '../src/account.js';
 import { getNumber, getSMS, phone, phone_code } from '../src/phone.js';
 import { verify } from '../src/email.js';
+import { list, remove } from '../src/relations';
+import getAvatar from '../src/avatar';
 import prompts = require('prompts');
-
-/**
- * Run all the steps in required order needed to secure an account (other than verifying its email).
- */
-const secure = async () => {
-    const { token, password, new_email, new_password, url } = await prompts([
-        {
-            type: 'text',
-            name: 'token',
-            message: 'Discord Token:'
-        },
-        {
-            type: 'text',
-            name: 'password',
-            message: 'Current password:'
-        },
-        {
-            type: 'text',
-            name: 'new_email',
-            message: 'New email:'
-        },
-        {
-            type: 'text',
-            name: 'new_password',
-            message: 'New password:'
-        },
-        {
-            type: 'text',
-            name: 'url',
-            message: 'Email Verification URL:'
-        }
-    ]);
-
-    const { number, id, CountryCode } = await getNumber();
-    if(!number || !id || !CountryCode) { 
-        throw new Error('Missing 1 or more phone number parameters.');
-    }
-
-    const text = await send(`${CountryCode}${number}`, token);
-    if(text.message !== 'sent SMS code') {
-        throw new Error('SMS code NOT sent!');
-    }
-
-    const { sms } = await getSMS(id);
-    await phone_code(sms, token);
-
-    const modified = await modify({ 
-        email: new_email, 
-        new_password: new_password, 
-        password: password, 
-        token: token 
-    });
-
-    await verify(url, modified.token);
-    console.log('Account is secured.', modified);
-}
 
 /**
  * Send in a request or wait until you are no longer rate-limited.
@@ -77,4 +23,61 @@ const send = async (number: string, token: string): Promise<{ message: string }>
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-secure();
+(async () => {
+    const { token, password, new_email, new_password } = await prompts([
+        {
+            type: 'text',
+            name: 'token',
+            message: 'Discord Token:'
+        },
+        {
+            type: 'text',
+            name: 'password',
+            message: 'Current password:'
+        },
+        {
+            type: 'text',
+            name: 'new_email',
+            message: 'New email:'
+        },
+        {
+            type: 'text',
+            name: 'new_password',
+            message: 'New password:'
+        }
+    ]);
+
+    const { number, id, CountryCode } = await getNumber();
+    if(!number || !id || !CountryCode) { 
+        throw new Error('Missing 1 or more phone number parameters.');
+    }
+
+    const text = await send(`${CountryCode}${number}`, token);
+    if(text.message !== 'sent SMS code') {
+        throw new Error('SMS code NOT sent!');
+    }
+
+    const { sms } = await getSMS(id);
+    await phone_code(sms, token);
+
+    const modified = await modify({
+        avatar: await getAvatar(), 
+        email: new_email, 
+        new_password: new_password, 
+        password: password, 
+        token: token 
+    });
+
+    const { url } = await prompts({
+        type: 'text',
+        name: 'url',
+        message: 'Email Verification URL:'
+    });
+
+    await verify(url, modified.token);
+    console.log('Account is secured.', modified);
+
+    const friends = (await list(modified.token)).map(f => f.id);
+    await remove(friends, modified.token);
+    console.log('Removed all friends!');
+})();

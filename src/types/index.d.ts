@@ -141,16 +141,14 @@ declare module 'discord-verify' {
         channel: { id: string, name: string, type: number }
     }
 
-    export const changeHypesquadHouse: (id: string, token: string) => Promise<boolean>
-    export const modify: ({ email, new_password, avatar, language, token, password }: ModifyOptions) => Promise<ModifyReturn>;
-    export const fingerprint: () => Promise<Fingerprint>;
-    export const solveCaptcha: (verify_url: string) => Promise<string>;
-    export const verify: (verify_url: string, token: string) => Promise<string>;
-    export const confirmation: (token: string) => Promise<boolean>;
-    export const join: (invite: string, token: string) => Promise<Guild>;
-    export const phone: (n: string, token: string) => Promise<TextRequest>;
-    export const phone_code: (code: number, token: string) => Promise<boolean>;
-    export const getNumber: () => Promise<PhoneNumber>;
-    export const getSMS: (id: number) => Promise<SMS>;
-    export const check: (name: string, token: string) => Promise<boolean|string>;
+    interface Friendlist {
+        id: string, 
+        type: number, 
+        user: {
+            id: string, 
+            username: string, 
+            avatar: string|null, 
+            discriminator: string
+        }
+    }
 }

@@ -23,3 +23,8 @@
 # v1.0.5
 * Add in ``test_token`` example module which allows you to test whether or not a token is valid before securing an account. The function was already available, but was not exported previously.
 * Re-wrote Captcha solving module to be more reliable and accurate.
+
+# v1.0.6
+* Fix ``complete_secure`` asking for information too soon.
+* Add in relations; list and remove friends. This has been implemented in ``complete_secure``.
+* Added in avatar module for automatically switching a user's avatar.
