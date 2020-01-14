@@ -3,12 +3,7 @@ import { stringify } from 'querystring';
 import fetch from 'node-fetch';
 
 import { captcha } from '../../config.js';
-
-/**
- * Halt program execution for ``ms`` milliseconds.
- * @param {number} ms Milliseconds to delay. 
- */
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+import { delay } from './delay.js';
 
 const key = '6Lef5iQTAAAAAKeIvIY-DeexoO3gj7ryl9rLMEnn'; // static key (?)
 

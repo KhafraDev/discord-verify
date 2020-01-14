@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 
 import { useragent, super_properties } from '../config';
-import fingerprint from './fingerprint';
+import Fingerprint from './fingerprint';
 import solveCaptcha from './util/solve_captcha';
 
 /**
@@ -19,7 +19,7 @@ const verify = async (verify_url: string, token: string): Promise<string> => {
         captcha_key: captcha_key
     });
     
-    const fp = await fingerprint();
+    const { fingerprint } = await Fingerprint();
     const res = await fetch('https://discordapp.com/api/v6/auth/verify', {
         method: 'POST',
         body: body,
@@ -31,7 +31,7 @@ const verify = async (verify_url: string, token: string): Promise<string> => {
             'Content-Type': 'application/json',
             'Authorization': token,
             'X-Super-Properties': super_properties,
-            'X-Fingerprint': fp.fingerprint,
+            'X-Fingerprint': fingerprint,
         }
     });
 
@@ -48,7 +48,7 @@ const redirect = async (url: string): Promise<string> => {
  * @param {string} token Discord Token.
  */
 const confirmation = async (token: string): Promise<boolean> => {
-    const fp = await fingerprint();
+    const { fingerprint } = await Fingerprint();
     const res = await fetch('https://discordapp.com/api/v6/auth/verify/resend', {
         method: 'POST',
         headers: {
@@ -58,7 +58,7 @@ const confirmation = async (token: string): Promise<boolean> => {
             'Accept-Language': 'en-US',
             'Authorization': token,
             'X-Super-Properties': super_properties,
-            'X-Fingerprint': fp.fingerprint
+            'X-Fingerprint': fingerprint
         }
     });
 

@@ -1,7 +1,8 @@
 import check from '../src/name';
 import prompts = require('prompts');
+import { delay } from '../src/util/delay';
 
-const Check = async () => {
+(async () => {
     const { username, password, token, run } = await prompts([
         {
             type: 'text',
@@ -35,8 +36,4 @@ const Check = async () => {
         }
         await delay(Math.floor(Math.random() * (2000 - 1000 + 1) + 1000)); // delay anywhere from 1 second to 2 seconds.
     }
-}
-
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-Check();
+})();

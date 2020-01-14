@@ -28,3 +28,8 @@
 * Fix ``complete_secure`` asking for information too soon.
 * Add in relations; list and remove friends. This has been implemented in ``complete_secure``.
 * Added in avatar module for automatically switching a user's avatar.
+
+# v1.0.7
+* Registration module.
+* Moved ``delay`` into Util.
+* Phone numbers will now have a 100% accuracy.

@@ -1,6 +1,7 @@
 import { modify } from '../src/account.js';
 import { getNumber, getSMS, phone, phone_code } from '../src/phone.js';
 import prompts = require('prompts');
+import { delay } from '../src/util/delay.js';
 
 /**
  * Send in a request or wait until you are no longer rate-limited.
@@ -17,8 +18,6 @@ const send = async (number: string, token: string): Promise<{ message: string }>
 
     return { message: 'sent SMS code' };
 }
-
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 (async () => {
     const { token, password, new_email, new_password } = await prompts([

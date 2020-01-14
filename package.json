@@ -1,6 +1,6 @@
 {
   "name": "discord-verify",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Verify and secure Discord accounts.",
   "dependencies": {
     "@types/prompts": "^2.0.3",

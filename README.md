@@ -1,6 +1,11 @@
 # discord-account-verifier
 Verify and secure Discord accounts.
 
+# Benefits
+* Tested on hundreds of accounts, used daily.
+* Open sourced under the MIT license with example use given.
+* Modulated with examples on how to use each section.
+
 # Requirements
 * NodeJS (tested on v13.5.0) and NPM.
 * ``typescript``, ``node-fetch``, ``user-agents``, and ``prompts``.

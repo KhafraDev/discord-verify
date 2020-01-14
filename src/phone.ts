@@ -1,6 +1,8 @@
 import fetch from 'node-fetch';
+import { stringify } from 'querystring';
 import { useragent, super_properties, smspva } from '../config';
 import { PhoneNumber, SMS, TextRequest } from 'discord-verify';
+import { delay } from './util/delay';
 
 /**
  * Send an initial request for a SMS code.
@@ -26,11 +28,7 @@ const phone = async (n: string, token: string): Promise<TextRequest> => {
 
     const text = await res.text();
     
-    if(text === '') { // empty response, sent SMS code
-        return { message: 'sent SMS code' };
-    } else {
-        return JSON.parse(text); // typically when ratelimited
-    }
+    return text === '' ? { message: 'sent SMS code' } : JSON.parse(text);
 }
 
 /**
@@ -55,20 +53,19 @@ const phone_code = async (code: string, token: string): Promise<boolean> => {
         }
     });
 
-    const text = await res.text();
-
-    if(text === '') { // empty response, sent SMS code
-        return true;
-    } else {
-        return false // ????
-    }
+    return (await res.text()) === '';
 }
 
 /**
  * Get a phone number to send the SMS to
  */
 const getNumber = async (): Promise<PhoneNumber> => {
-    const res = await fetch('http://smspva.com/priemnik.php?metod=get_number&country=RU&service=opt45&apikey=' + smspva);
+    const res = await fetch('http://smspva.com/priemnik.php?' + stringify({
+        metod: 'get_number',
+        country: 'RU', // can be changed
+        service: 'opt45',
+        apikey: smspva
+    }))
 
     if(res.status === 200) {
         return res.json();
@@ -80,25 +77,28 @@ const getNumber = async (): Promise<PhoneNumber> => {
 /**
  * Get the SMS messages
  * @param {number} id 
+ * @param {boolean} perfect_accuracy Enable perfect, 10 minute, accuracy.
  */
 const getSMS = async (id: number): Promise<SMS> => {
-    const url = 'http://smspva.com/priemnik.php?metod=get_sms&country=ru&service=opt45&apikey=' + smspva + '&id=' + id;
-
-    for(let MAX_RETRIES = 7; MAX_RETRIES > 0; MAX_RETRIES--) {
-        console.log('Looking for SMS, %d tries remaining.', MAX_RETRIES);
-        const res = await fetch(url);
+    while(true) {
+        const res = await fetch('http://smspva.com/priemnik.php?' + stringify({
+            metod: 'get_sms',
+            country: 'ru',
+            service: 'opt45',
+            apikey: smspva,
+            id: id
+        }));
         const json = await res.json();
 
-        if(json.response === '3') throw new Error('number expired!');
-        if(json.response === '1' && !!json.sms) return json;
+        switch(json.response) {
+            case '1': return json;
+            case '3': throw 'Phone number expired!'
+        }
 
         await delay(30000);
     }
-
-    throw new Error('No SMS received from Discord!');
 }
 
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export {
     phone,

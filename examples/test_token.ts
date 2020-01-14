@@ -10,7 +10,8 @@ import prompts = require('prompts');
     
     try {
         const User = await user(token);
-        console.log('Token is valid:', User);
+        const isValid = User.verified === false && User.mfa_enabled === false && User.phone === null;
+        console.log(isValid ? 'Token is valid:' : 'Token is not valid:', User);
     } catch(err) {
         console.error(err.message);
     }

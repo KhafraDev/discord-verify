@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import { Friendlist } from 'discord-verify';
 import { useragent, super_properties } from '../config';
+import { delay } from './util/delay';
 
 /**
  * Returns all the user's friends.
@@ -21,6 +22,11 @@ const list = async (token: string): Promise<Friendlist[]> => {
     return res.json();
 }
 
+/**
+ * Remove a list of friends by a list of IDs.
+ * @param {string[]} ids List of friends to be removed by ID.
+ * @param {string} token Discord Token.
+ */
 const remove = async (ids: string[], token: string): Promise<boolean> => {
     const XContextProperties = Buffer.from(JSON.stringify({
         location: 'ContextMenu'
@@ -34,7 +40,6 @@ const remove = async (ids: string[], token: string): Promise<boolean> => {
                 'User-Agent': useragent,
                 'Accept': '*/*',
                 'Accept-Language': 'en-US',
-                'Accept-Encoding': 'gzip, deflate, br',
                 'X-Context-Properties': XContextProperties,
                 'Authorization': token,
                 'X-Super-Properties': super_properties
@@ -50,8 +55,6 @@ const remove = async (ids: string[], token: string): Promise<boolean> => {
 
     return true;
 }
-
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export {
     list,

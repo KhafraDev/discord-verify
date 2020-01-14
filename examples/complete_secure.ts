@@ -4,6 +4,7 @@ import { verify } from '../src/email.js';
 import { list, remove } from '../src/relations';
 import getAvatar from '../src/avatar';
 import prompts = require('prompts');
+import { delay } from '../src/util/delay.js';
 
 /**
  * Send in a request or wait until you are no longer rate-limited.
@@ -20,8 +21,6 @@ const send = async (number: string, token: string): Promise<{ message: string }>
 
     return { message: 'sent SMS code' };
 }
-
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 (async () => {
     const { token, password, new_email, new_password } = await prompts([
@@ -78,6 +77,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
     console.log('Account is secured.', modified);
 
     const friends = (await list(modified.token)).map(f => f.id);
+    console.log('Removing %d friends!', friends.length);
     await remove(friends, modified.token);
     console.log('Removed all friends!');
 })();
