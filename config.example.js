@@ -1,4 +1,4 @@
-import UserAgent = require('user-agents');
+const UserAgent = require('user-agents');
 const Agent = new UserAgent().random().data;
 
 /**
@@ -20,13 +20,9 @@ const super_properties = Buffer.from(JSON.stringify({
     'client_event_source': null
 })).toString('base64');
 
-const useragent = Agent.userAgent;
-const smspva = '';
-const captcha = '';
-
-export {
-    useragent,
-    super_properties,
-    smspva,
-    captcha
+module.exports = {
+    useragent: Agent.userAgent,
+    super_properties: super_properties,
+    smspva: 'SMSPVA API key',
+    captcha: '2Captcha API key'
 }

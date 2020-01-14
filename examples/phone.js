@@ -1,6 +1,6 @@
-import { getNumber, getSMS, phone, phone_code } from '../src/phone';
-import prompts = require('prompts');
-import { delay } from '../src/util/delay';
+const { getNumber, getSMS, phone, phone_code } = require('../src/phone');
+const prompts = require('prompts');
+const { delay } = require('../src/util/delay');
 
 /**
  * Send in a request or wait until you are no longer rate-limited.
@@ -8,7 +8,7 @@ import { delay } from '../src/util/delay';
  * @param {string} token Discord account token.
  * @returns {Promise<{ message: string }>}
  */
-const send = async (number: string, token: string): Promise<{ message: string }> => {
+const send = async (number, token) => {
     let p = await phone(number, token);
     while(p.message === 'You are being rate limited.') {
         console.log('rate limited for %d seconds (+10)', Number(p.retry_after / 1000));

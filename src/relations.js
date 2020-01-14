@@ -1,14 +1,13 @@
-import fetch from 'node-fetch';
-import { Friendlist } from 'discord-verify';
-import { useragent, super_properties } from '../config';
-import { delay } from './util/delay';
+const fetch = require('node-fetch');
+const { useragent, super_properties } = require('../config');
+const { delay } = require('./util/delay');
 
 /**
  * Returns all the user's friends.
  * @param token Discord token
- * @returns {Promise<Friendlist[]>}
+ * @returns {Promise<Object[]>}
  */
-const list = async (token: string): Promise<Friendlist[]> => {
+const list = async token => {
     const res = await fetch('https://discordapp.com/api/v6/users/@me/relationships', {
         headers: {
             'Host': 'discordapp.com',
@@ -27,7 +26,7 @@ const list = async (token: string): Promise<Friendlist[]> => {
  * @param {string[]} ids List of friends to be removed by ID.
  * @param {string} token Discord Token.
  */
-const remove = async (ids: string[], token: string): Promise<boolean> => {
+const remove = async (ids, token) => {
     const XContextProperties = Buffer.from(JSON.stringify({
         location: 'ContextMenu'
     })).toString('base64');
@@ -56,7 +55,7 @@ const remove = async (ids: string[], token: string): Promise<boolean> => {
     return true;
 }
 
-export {
+module.exports = {
     list,
     remove
 }

@@ -1,13 +1,13 @@
-import fetch from 'node-fetch';
-import { randomBytes } from 'crypto';
-import Fingerprint from './fingerprint';
-import { super_properties, useragent } from '../config';
-import solveCaptcha from './util/solve_captcha';
+const fetch = require('node-fetch');
+const { randomBytes } = require('crypto');
+const Fingerprint = require('./fingerprint');
+const { super_properties, useragent } = require('../config');
+const solveCaptcha = require('./util/solve_captcha');
 
 /**
  * Try to register an account.
  */
-const register = async ({ email, username, captcha }: { email?: string; username: string; captcha: boolean }) => {
+const register = async ({ email, username, captcha }) => {
     const { fingerprint } = await Fingerprint();
     const body = JSON.stringify({
         fingerprint: fingerprint,
@@ -37,4 +37,4 @@ const register = async ({ email, username, captcha }: { email?: string; username
     return res.json();
 }
 
-export default register;
+module.exports = register;

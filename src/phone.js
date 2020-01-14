@@ -1,15 +1,14 @@
-import fetch from 'node-fetch';
-import { stringify } from 'querystring';
-import { useragent, super_properties, smspva } from '../config';
-import { PhoneNumber, SMS, TextRequest } from 'discord-verify';
-import { delay } from './util/delay';
+const fetch = require('node-fetch');
+const { stringify } = require('querystring');
+const { useragent, super_properties, smspva } = require('../config');
+const { delay } = require('./util/delay');
 
 /**
  * Send an initial request for a SMS code.
  * @param {string} n Phone number (including country code!)
  * @param {string} token Discord account token.
  */
-const phone = async (n: string, token: string): Promise<TextRequest> => {
+const phone = async (n, token) => {
     const body = JSON.stringify({ phone: n });
 
     const res = await fetch('https://discordapp.com/api/v6/users/@me/phone', {
@@ -36,7 +35,7 @@ const phone = async (n: string, token: string): Promise<TextRequest> => {
  * @param {number} code 
  * @param {string} token Discord account token.
  */
-const phone_code = async (code: string, token: string): Promise<boolean> => {
+const phone_code = async (code, token) => {
     const body = JSON.stringify({ code: code });
 
     const res = await fetch('https://discordapp.com/api/v6/users/@me/phone/verify', {
@@ -59,7 +58,7 @@ const phone_code = async (code: string, token: string): Promise<boolean> => {
 /**
  * Get a phone number to send the SMS to
  */
-const getNumber = async (): Promise<PhoneNumber> => {
+const getNumber = async () => {
     const res = await fetch('http://smspva.com/priemnik.php?' + stringify({
         metod: 'get_number',
         country: 'RU', // can be changed
@@ -79,7 +78,7 @@ const getNumber = async (): Promise<PhoneNumber> => {
  * @param {number} id 
  * @param {boolean} perfect_accuracy Enable perfect, 10 minute, accuracy.
  */
-const getSMS = async (id: number): Promise<SMS> => {
+const getSMS = async id => {
     while(true) {
         const res = await fetch('http://smspva.com/priemnik.php?' + stringify({
             metod: 'get_sms',
@@ -100,7 +99,7 @@ const getSMS = async (id: number): Promise<SMS> => {
 }
 
 
-export {
+module.exports = {
     phone,
     phone_code,
     getNumber,

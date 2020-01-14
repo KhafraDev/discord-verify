@@ -33,3 +33,6 @@
 * Registration module.
 * Moved ``delay`` into Util.
 * Phone numbers will now have a 100% accuracy.
+
+# v1.0.8
+* Removed all traces of TypeScript.

@@ -1,5 +1,5 @@
-import { verify } from '../src/email.js';
-import prompts = require('prompts');
+const { verify } = require('../src/email.js');
+const prompts = require('prompts');
 
 (async () => {
     const { token, url } = await prompts([

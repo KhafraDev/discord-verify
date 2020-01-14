@@ -1,9 +1,9 @@
-// import { format } from 'util';
-import { stringify } from 'querystring';
-import fetch from 'node-fetch';
+// const { format } = require('util';
+const { stringify } = require('querystring');
+const fetch = require('node-fetch');
 
-import { captcha } from '../../config.js';
-import { delay } from './delay.js';
+const { captcha } = require('../../config.js');
+const { delay } = require('./delay.js');
 
 const key = '6Lef5iQTAAAAAKeIvIY-DeexoO3gj7ryl9rLMEnn'; // static key (?)
 
@@ -12,7 +12,7 @@ const key = '6Lef5iQTAAAAAKeIvIY-DeexoO3gj7ryl9rLMEnn'; // static key (?)
  * @param {string} verify_url The Discord verification URL
  * @returns {Promise<string>} Captcha key
  */
-const solveCaptcha = async (verify_url: string): Promise<string> => {
+const solveCaptcha = async verify_url => {
     const res = await fetch('https://2captcha.com/in.php?' + stringify({
         key: captcha,
         method: 'userrecaptcha',
@@ -23,7 +23,7 @@ const solveCaptcha = async (verify_url: string): Promise<string> => {
 
     if(!parseInt(request.slice(3))) throw new Error(`Received request "${request}"`);
 
-    let text: string;
+    let text;
     while(typeof text !== 'string') {
         text = await (await fetch('https://2captcha.com/res.php?' + stringify({
             key: captcha,
@@ -38,4 +38,4 @@ const solveCaptcha = async (verify_url: string): Promise<string> => {
     return text.substring(3); // OK|[ID]
 }
 
-export default solveCaptcha;
+module.exports = solveCaptcha;

@@ -1,10 +1,6 @@
 # Khafra
-*.js
-old
-*.bak
-*.txt
 node_modules
-config.*
+config.js
 test*
-!test_token.ts
+!test_token.js
 secret

@@ -1,5 +1,5 @@
-import join from '../src/invites.js';
-import prompts = require('prompts');
+const join = require('../src/invites.js');
+const prompts = require('prompts');
 
 (async () => {
     const { invites, token } = await prompts([

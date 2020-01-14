@@ -1,11 +1,10 @@
-import fetch from 'node-fetch';
-import { super_properties, useragent } from '../config.js';
-import { ModifyOptions, User, ChangeLanguage, ModifyReturn } from 'discord-verify';
+const fetch = require('node-fetch');
+const { super_properties, useragent } = require('../config.js');
 
 /**
- * Fetch the user object from discord.
+ * Fetch the user object = require(discord.
  */
-const user = async (token: string): Promise<User> => {
+const user = async token => {
     const res = await fetch('https://discordapp.com/api/v6/users/@me', {
         headers: {
             Authorization: token
@@ -24,7 +23,7 @@ const user = async (token: string): Promise<User> => {
  * @param {string} language 
  * @param {string} token 
  */
-const changeLanguage = async (language: string, token: string): Promise<ChangeLanguage> => {
+const changeLanguage = async (language, token) => {
     const body = JSON.stringify({ locale: language });
     const res = await fetch('https://discordapp.com/api/v6/users/@me/settings', {
         method: 'PATCH',
@@ -55,7 +54,7 @@ const changeLanguage = async (language: string, token: string): Promise<ChangeLa
  * @param {string} token Discord account token.
  * @returns {Promise<boolean>}
  */
-const changeHypesquadHouse = async (id: string, token: string): Promise<boolean> => {
+const changeHypesquadHouse = async (id, token) => {
     const body = JSON.stringify({ house_id: Number(id) >= 1 && Number(id) <= 3 ? id : 1 });
     const res = await fetch('https://discordapp.com/api/v6/hypesquad/online', {
         method: 'POST',
@@ -82,7 +81,7 @@ const changeHypesquadHouse = async (id: string, token: string): Promise<boolean>
  * Modify the user's password, email, and/or language.
  * @param {object} options User options
  */
-const modify = async ({ username, email, new_password, avatar, language, token, password }: ModifyOptions): Promise<ModifyReturn> => {
+const modify = async ({ username, email, new_password, avatar, language, token, password }) => {
     const userObj = await user(token);
     await changeLanguage(language || 'en-US', token);
 
@@ -112,7 +111,7 @@ const modify = async ({ username, email, new_password, avatar, language, token, 
     return res.json();
 }
 
-export {
+module.exports = {
     modify,
     changeHypesquadHouse,
     user
