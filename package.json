@@ -1,7 +1,7 @@
 {
   "name": "discord-verify",
-  "version": "1.0.8",
-  "description": "Verify, register, and secure Discord accounts.",
+  "version": "1.0.9",
+  "description": "Automate Discord.",
   "directories": {
     "example": "examples"
   },
@@ -12,7 +12,12 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "secure": "node examples/complete_secure.js",
+    "hypesquad": "node examples/hypesquad.js",
+    "invite": "node examples/invites.js",
+    "name": "node examples/name_check.js",
+    "register": "node examples/register.js",
+    "token": "node examples/test_token.js"
   },
   "repository": {
     "type": "git",

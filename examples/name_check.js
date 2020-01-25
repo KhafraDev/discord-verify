@@ -34,6 +34,6 @@ const { delay } = require('../src/util/delay');
             console.log('%d. Changed usernames!', i + 1);
             break; // exit for loop
         }
-        await delay(Math.floor(Math.random() * (2000 - 1000 + 1) + 1000)); // delay anywhere = require(1 second to 2 seconds.
+        await delay(Math.floor(Math.random() * (2000 - 1000 + 1) + 1000));
     }
 })();

@@ -46,6 +46,7 @@ const changeLanguage = async (language, token) => {
  * Change or join a HypeSquad house. This does cause "glitchy" behavior as the menu in settings does not update to reflect the changes. 
  * @example
  * const IDs = {
+ *  0: 'Leave HypeSquad',
  *  1: 'Bravery',
  *  2: 'Brilliance',
  *  3: 'Balance'
@@ -55,7 +56,7 @@ const changeLanguage = async (language, token) => {
  * @returns {Promise<boolean>}
  */
 const changeHypesquadHouse = async (id, token) => {
-    const body = JSON.stringify({ house_id: Number(id) >= 1 && Number(id) <= 3 ? id : 1 });
+    const body = JSON.stringify({ house_id: id });
     const res = await fetch('https://discordapp.com/api/v6/hypesquad/online', {
         method: 'POST',
         body: body,

@@ -29,7 +29,7 @@ const list = async token => {
 const remove = async (ids, token) => {
     const XContextProperties = Buffer.from(JSON.stringify({
         location: 'ContextMenu'
-    })).toString('base64');
+    })).toString('base64'); // Discord tracking...
 
     for(const id of ids) {
         const res = await fetch('https://discordapp.com/api/v6/users/@me/relationships/' + id, {

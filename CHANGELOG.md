@@ -36,3 +36,7 @@
 
 # v1.0.8
 * Removed all traces of TypeScript.
+
+# v1.0.9
+* Removed checks in ``changeHypesquadHouse`` and also include newly discovered info (inputting 0 will allow you to leave HypeSquad).
+* Added in connections which will add in fake connections from Skype, League of Legends, or Battle.net.
