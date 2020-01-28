@@ -1,6 +1,5 @@
 const fetch = require('node-fetch');
 const { randomBytes } = require('crypto');
-const { useragent } = require('../config');
 
 /**
  * Add a connection to an account.
@@ -26,7 +25,7 @@ const Connection = async ({ name, token, type }) => {
             'Host': 'discordapp.com',
             'Authorization': token,
             'Accept-Language': 'en-US',
-            'User-Agent': useragent,
+            'User-Agent': process.env.useragent,
             'Accept': '*/*',
             'Content-Type': 'application/json',
         }

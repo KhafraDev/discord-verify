@@ -1,6 +1,6 @@
 {
   "name": "discord-verify",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "Automate Discord.",
   "directories": {
     "example": "examples"
@@ -11,14 +11,6 @@
     "user-agents": "^1.0.500"
   },
   "devDependencies": {},
-  "scripts": {
-    "secure": "node examples/complete_secure.js",
-    "hypesquad": "node examples/hypesquad.js",
-    "invite": "node examples/invites.js",
-    "name": "node examples/name_check.js",
-    "register": "node examples/register.js",
-    "token": "node examples/test_token.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KhafraDev/discord-verify.git"
@@ -32,5 +24,6 @@
   "bugs": {
     "url": "https://github.com/KhafraDev/discord-verify/issues"
   },
-  "homepage": "https://github.com/KhafraDev/discord-verify#readme"
+  "homepage": "https://github.com/KhafraDev/discord-verify#readme",
+  "main": "src/index.js"
 }

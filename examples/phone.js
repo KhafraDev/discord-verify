@@ -1,4 +1,4 @@
-const { getNumber, getSMS, phone, phone_code } = require('../src/phone');
+const { getNumber, getSMS, phone, phone_code } = require('../src/index');
 const prompts = require('prompts');
 const { delay } = require('../src/util/delay');
 

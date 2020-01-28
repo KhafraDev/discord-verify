@@ -1,8 +1,8 @@
-const check = require('../src/name');
+const { name } = require('../src/index');
 const prompts = require('prompts');
 const { delay } = require('../src/util/delay');
 
-(async () => {
+(async () => {    
     const { username, password, token, run } = await prompts([
         {
             type: 'text',
@@ -27,7 +27,7 @@ const { delay } = require('../src/util/delay');
     ]);
 
     for(let i = 0; i < run; i++) {
-        const res = await check(username, password, token);
+        const res = await name(username, password, token);
         if(typeof res === 'string') {
             console.log('%d. %s', i + 1, res);
         } else {

@@ -1,5 +1,4 @@
 const fetch = require('node-fetch');
-const { super_properties, useragent } = require('../config.js');
 
 /**
  * Fetch the user object = require(discord.
@@ -30,12 +29,12 @@ const changeLanguage = async (language, token) => {
         body: body,
         headers: {
             'Host': 'discordapp.com',
-            'User-Agent': useragent,
+            'User-Agent': process.env.useragent,
             'Accept': '*/*',
             'Accept-Language': language,
             'Content-Type': 'application/json',
             'Authorization': token,
-            'X-Super-Properties': super_properties,
+            'X-Super-Properties': process.env.super_properties,
         }   
     });
 
@@ -62,12 +61,12 @@ const changeHypesquadHouse = async (id, token) => {
         body: body,
         headers: {
             'Host': 'discordapp.com',
-            'User-Agent': useragent, 
+            'User-Agent': process.env.useragent, 
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Content-Type': 'application/json',
             'Authorization': token,
-            'X-Super-Properties': super_properties, 
+            'X-Super-Properties': process.env.super_properties, 
         }
     });
 
@@ -100,12 +99,12 @@ const modify = async ({ username, email, new_password, avatar, language, token, 
         body: body,
         headers: {
             'Host': 'discordapp.com',
-            'User-Agent': useragent,
+            'User-Agent': process.env.useragent,
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Content-Type': 'application/json',
             'Authorization': token,
-            'X-Super-Properties': super_properties
+            'X-Super-Properties': process.env.super_properties
         }
     });
 

@@ -1,4 +1,4 @@
-const { verify } = require('../src/email.js');
+const { verify } = require('../src/index');
 const prompts = require('prompts');
 
 (async () => {

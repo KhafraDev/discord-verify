@@ -1,8 +1,7 @@
 const fetch = require('node-fetch');
 const { randomBytes } = require('crypto');
 const Fingerprint = require('./fingerprint');
-const { super_properties, useragent } = require('../config');
-const solveCaptcha = require('./util/solve_captcha');
+const solveCaptcha = require('../util/solve_captcha');
 
 /**
  * Try to register an account.
@@ -25,11 +24,11 @@ const register = async ({ email, username, captcha }) => {
         body: body,
         headers: {
             'Host': 'discordapp.com',
-            'User-Agent': useragent,
+            'User-Agent': process.env.useragent,
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Content-Type': 'application/json',
-            'X-Super-Properties': super_properties, 
+            'X-Super-Properties': process.env.super_properties, 
             'X-Fingerprint': fingerprint
         }
     });

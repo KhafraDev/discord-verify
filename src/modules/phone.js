@@ -1,7 +1,6 @@
 const fetch = require('node-fetch');
 const { stringify } = require('querystring');
-const { useragent, super_properties, smspva } = require('../config');
-const { delay } = require('./util/delay');
+const { delay } = require('../util/delay');
 
 /**
  * Send an initial request for a SMS code.
@@ -19,9 +18,9 @@ const phone = async (n, token) => {
             'Accept-Language': 'en-US',
             'Content-Type': 'application/json',
             'Host': 'discordapp.com',
-            'User-Agent': useragent,
+            'User-Agent': process.env.useragent,
             'Authorization': token,
-            'X-Super-Properties': super_properties
+            'X-Super-Properties': process.env.super_properties
         },
     });
 
@@ -46,9 +45,9 @@ const phone_code = async (code, token) => {
             'Accept-Language': 'en-US',
             'Content-Type': 'application/json',
             'Host': 'discordapp.com',
-            'User-Agent': useragent,
+            'User-Agent': process.env.useragent,
             'Authorization': token,
-            'X-Super-Properties': super_properties
+            'X-Super-Properties': process.env.super_properties
         }
     });
 
@@ -63,8 +62,8 @@ const getNumber = async () => {
         metod: 'get_number',
         country: 'RU', // can be changed
         service: 'opt45',
-        apikey: smspva
-    }))
+        apikey: process.env.smspva
+    }));
 
     if(res.status === 200) {
         return res.json();
@@ -84,7 +83,7 @@ const getSMS = async id => {
             metod: 'get_sms',
             country: 'ru',
             service: 'opt45',
-            apikey: smspva,
+            apikey: process.env.smspva,
             id: id
         }));
         const json = await res.json();

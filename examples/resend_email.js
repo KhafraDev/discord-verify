@@ -1,4 +1,4 @@
-const { confirmation } = require('../src/email');
+const { confirmation } = require('../src/index');
 const prompts = require('prompts');
 
 (async () => {

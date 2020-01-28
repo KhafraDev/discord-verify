@@ -1,8 +1,5 @@
-// const { format } = require('util';
 const { stringify } = require('querystring');
 const fetch = require('node-fetch');
-
-const { captcha } = require('../../config.js');
 const { delay } = require('./delay.js');
 
 const key = '6Lef5iQTAAAAAKeIvIY-DeexoO3gj7ryl9rLMEnn'; // static key (?)
@@ -14,7 +11,7 @@ const key = '6Lef5iQTAAAAAKeIvIY-DeexoO3gj7ryl9rLMEnn'; // static key (?)
  */
 const solveCaptcha = async verify_url => {
     const res = await fetch('https://2captcha.com/in.php?' + stringify({
-        key: captcha,
+        key: process.env.captcha,
         method: 'userrecaptcha',
         googlekey: key,
         pageurl: verify_url
@@ -26,7 +23,7 @@ const solveCaptcha = async verify_url => {
     let text;
     while(typeof text !== 'string') {
         text = await (await fetch('https://2captcha.com/res.php?' + stringify({
-            key: captcha,
+            key: process.env.captcha,
             id: request.slice(3),
             action: 'get'
         }))).text();

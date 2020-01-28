@@ -1,8 +1,6 @@
 const fetch = require('node-fetch');
-
-const { useragent, super_properties } = require('../config');
 const Fingerprint = require('./fingerprint');
-const solveCaptcha = require('./util/solve_captcha');
+const solveCaptcha = require('../util/solve_captcha');
 
 /**
  * Verify an email.
@@ -25,12 +23,12 @@ const verify = async (verify_url, token) => {
         body: body,
         headers: {
             'Host': 'discordapp.com',
-            'User-Agent': useragent, 
+            'User-Agent': process.env.useragent, 
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Content-Type': 'application/json',
             'Authorization': token,
-            'X-Super-Properties': super_properties,
+            'X-Super-Properties': process.env.super_properties,
             'X-Fingerprint': fingerprint,
         }
     });
@@ -57,11 +55,11 @@ const confirmation = async token => {
         method: 'POST',
         headers: {
             'Host': 'discordapp.com',
-            'User-Agent': useragent,
+            'User-Agent': process.env.useragent,
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Authorization': token,
-            'X-Super-Properties': super_properties,
+            'X-Super-Properties': process.env.super_properties,
             'X-Fingerprint': fingerprint
         }
     });

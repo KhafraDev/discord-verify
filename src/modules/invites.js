@@ -1,5 +1,4 @@
 const fetch = require('node-fetch');
-const { useragent, super_properties } = require('../config');
 
 /**
  * Join a Discord server.
@@ -17,12 +16,12 @@ const join = async (invite, token) => {
         headers: {
             'Host': 'discordapp.com',
             'Content-Type': 'application/json',
-            'User-Agent': useragent,
+            'User-Agent': process.env.useragent,
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'X-Context-Properties': ContextProperties,
             'Authorization': token,
-            'X-Super-Properties': super_properties,
+            'X-Super-Properties': process.env.super_properties,
         }
     });
 

@@ -1,5 +1,4 @@
 const fetch = require('node-fetch');
-const { useragent } = require('../config');
 
 /**
  * Get the X-Fingerprint Header = require(Discord
@@ -15,7 +14,7 @@ const fingerprint = async () => {
             'Accept-Language': 'en-US',
             'Content-Type': 'application/json',
             'Host': 'discordapp.com',
-            'User-Agent': useragent,
+            'User-Agent': process.env.useragent,
             'X-Fingerprint': '',
             'X-Context-Properties': ContextProperties // somehow missed this completely
         }

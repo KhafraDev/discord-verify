@@ -1,6 +1,5 @@
 const fetch = require('node-fetch');
-const { useragent, super_properties } = require('../config');
-const { delay } = require('./util/delay');
+const { delay } = require('../util/delay');
 
 /**
  * Returns all the user's friends.
@@ -11,7 +10,7 @@ const list = async token => {
     const res = await fetch('https://discordapp.com/api/v6/users/@me/relationships', {
         headers: {
             'Host': 'discordapp.com',
-            'User-Agent': useragent,
+            'User-Agent': process.env.useragent,
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Authorization': token
@@ -36,12 +35,12 @@ const remove = async (ids, token) => {
             method: 'DELETE',
             headers: {
                 'Host': 'discordapp.com',
-                'User-Agent': useragent,
+                'User-Agent': process.env.useragent,
                 'Accept': '*/*',
                 'Accept-Language': 'en-US',
                 'X-Context-Properties': XContextProperties,
                 'Authorization': token,
-                'X-Super-Properties': super_properties
+                'X-Super-Properties': process.env.super_properties
             }
         });
 

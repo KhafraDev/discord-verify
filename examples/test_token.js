@@ -1,4 +1,4 @@
-const { user } = require('../src/account');
+const { user } = require('../src/index');
 const prompts = require('prompts');
 
 (async () => {

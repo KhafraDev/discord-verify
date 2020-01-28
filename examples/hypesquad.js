@@ -1,4 +1,4 @@
-const { changeHypesquadHouse } = require('../src/account.js');
+const { changeHypesquadHouse } = require('../src/index');
 const prompts = require('prompts');
 
 (async () => {

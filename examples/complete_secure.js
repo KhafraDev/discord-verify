@@ -1,8 +1,15 @@
-const { modify } = require('../src/account.js');
-const { getNumber, getSMS, phone, phone_code } = require('../src/phone.js');
-const { verify } = require('../src/email.js');
-const { list, remove } = require('../src/relations');
-const getAvatar = require('../src/avatar');
+const {
+    modify,
+    getNumber,
+    getSMS,
+    phone,
+    phone_code,
+    verify,
+    list,
+    remove,
+    avatar
+} = require('../src/index');
+
 const prompts = require('prompts');
 const { delay } = require('../src/util/delay.js');
 
@@ -60,7 +67,7 @@ const send = async (number, token) => {
     await phone_code(sms, token);
 
     const modified = await modify({
-        avatar: await getAvatar(), 
+        avatar: await avatar(), 
         email: new_email, 
         new_password: new_password, 
         password: password, 
