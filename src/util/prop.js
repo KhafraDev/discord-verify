@@ -1,4 +1,4 @@
-import UserAgent = require('user-agents');
+const UserAgent = require('user-agents');
 const Agent = new UserAgent().random().data;
 
 /**
@@ -20,13 +20,7 @@ const super_properties = Buffer.from(JSON.stringify({
     'client_event_source': null
 })).toString('base64');
 
-const useragent = Agent.userAgent;
-const smspva = '';
-const captcha = '';
+process.env.super_properties = super_properties;
+process.env.useragent = Agent.userAgent;
 
-export {
-    useragent,
-    super_properties,
-    smspva,
-    captcha
-}
+require(process.cwd() + '/config');

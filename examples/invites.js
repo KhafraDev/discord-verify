@@ -1,11 +1,11 @@
-import join from '../src/invites.js';
-import prompts = require('prompts');
+const { invites } = require('../src/index');
+const prompts = require('prompts');
 
 (async () => {
-    const { invites, token } = await prompts([
+    const { invite, token } = await prompts([
         {
             type: 'text',
-            name: 'invites',
+            name: 'invite',
             message: 'Invites separated by a space:'
         },
         {
@@ -15,8 +15,8 @@ import prompts = require('prompts');
         }
     ]);
 
-    for(const i of invites.split(/\s+/g)) {
-        const res = await join(i.trim(), token);
+    for(const i of invite.split(/\s+/g)) {
+        const res = await invites(i.trim(), token);
         console.log(res ? `Joined guild ${res.guild.name} (${res.guild.id})!` : `Did not join guild ${i}.`);
     }
 })();

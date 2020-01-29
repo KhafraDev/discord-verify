@@ -1,17 +1,13 @@
-import { modify } from '../src/account.js';
-import { getNumber, getSMS, phone, phone_code } from '../src/phone.js';
-import { verify } from '../src/email.js';
-import { list, remove } from '../src/relations';
-import getAvatar from '../src/avatar';
-import prompts = require('prompts');
-import { delay } from '../src/util/delay.js';
+const { modify, getNumber, getSMS, phone, phone_code } = require('../src/index');
+const prompts = require('prompts');
+const { delay } = require('../src/util/delay.js');
 
 /**
  * Send in a request or wait until you are no longer rate-limited.
  * @param {string} number Phone number used
  * @param {Promise<{ message: string }>} token Discord account token.
  */
-const send = async (number: string, token: string): Promise<{ message: string }> => {
+const send = async (number, token) => {
     let p = await phone(number, token);
     while(p.message === 'You are being rate limited.') {
         console.log('rate limited for %d seconds (+10)', Number(p.retry_after / 1000));
@@ -59,25 +55,12 @@ const send = async (number: string, token: string): Promise<{ message: string }>
     const { sms } = await getSMS(id);
     await phone_code(sms, token);
 
-    const modified = await modify({
-        avatar: await getAvatar(), 
+    const modified = await modify({ 
         email: new_email, 
         new_password: new_password, 
         password: password, 
         token: token 
     });
-
-    const { url } = await prompts({
-        type: 'text',
-        name: 'url',
-        message: 'Email Verification URL:'
-    });
-
-    await verify(url, modified.token);
-    console.log('Account is secured.', modified);
-
-    const friends = (await list(modified.token)).map(f => f.id);
-    console.log('Removing %d friends!', friends.length);
-    await remove(friends, modified.token);
-    console.log('Removed all friends!');
+    
+    console.log('Finished securing!', modified);
 })();

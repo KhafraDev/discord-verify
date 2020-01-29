@@ -1,5 +1,5 @@
-import { user } from '../src/account';
-import prompts = require('prompts');
+const { user } = require('../src/index');
+const prompts = require('prompts');
 
 (async () => {
     const { token } = await prompts({

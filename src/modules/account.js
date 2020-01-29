@@ -1,11 +1,9 @@
-import fetch from 'node-fetch';
-import { super_properties, useragent } from '../config.js';
-import { ModifyOptions, User, ChangeLanguage, ModifyReturn } from 'discord-verify';
+const fetch = require('node-fetch');
 
 /**
- * Fetch the user object from discord.
+ * Fetch the user object = require(discord.
  */
-const user = async (token: string): Promise<User> => {
+const user = async token => {
     const res = await fetch('https://discordapp.com/api/v6/users/@me', {
         headers: {
             Authorization: token
@@ -24,19 +22,19 @@ const user = async (token: string): Promise<User> => {
  * @param {string} language 
  * @param {string} token 
  */
-const changeLanguage = async (language: string, token: string): Promise<ChangeLanguage> => {
+const changeLanguage = async (language, token) => {
     const body = JSON.stringify({ locale: language });
     const res = await fetch('https://discordapp.com/api/v6/users/@me/settings', {
         method: 'PATCH',
         body: body,
         headers: {
             'Host': 'discordapp.com',
-            'User-Agent': useragent,
+            'User-Agent': process.env.useragent,
             'Accept': '*/*',
             'Accept-Language': language,
             'Content-Type': 'application/json',
             'Authorization': token,
-            'X-Super-Properties': super_properties,
+            'X-Super-Properties': process.env.super_properties,
         }   
     });
 
@@ -47,6 +45,7 @@ const changeLanguage = async (language: string, token: string): Promise<ChangeLa
  * Change or join a HypeSquad house. This does cause "glitchy" behavior as the menu in settings does not update to reflect the changes. 
  * @example
  * const IDs = {
+ *  0: 'Leave HypeSquad',
  *  1: 'Bravery',
  *  2: 'Brilliance',
  *  3: 'Balance'
@@ -55,19 +54,19 @@ const changeLanguage = async (language: string, token: string): Promise<ChangeLa
  * @param {string} token Discord account token.
  * @returns {Promise<boolean>}
  */
-const changeHypesquadHouse = async (id: string, token: string): Promise<boolean> => {
-    const body = JSON.stringify({ house_id: Number(id) >= 1 && Number(id) <= 3 ? id : 1 });
+const changeHypesquadHouse = async (id, token) => {
+    const body = JSON.stringify({ house_id: id });
     const res = await fetch('https://discordapp.com/api/v6/hypesquad/online', {
         method: 'POST',
         body: body,
         headers: {
             'Host': 'discordapp.com',
-            'User-Agent': useragent, 
+            'User-Agent': process.env.useragent, 
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Content-Type': 'application/json',
             'Authorization': token,
-            'X-Super-Properties': super_properties, 
+            'X-Super-Properties': process.env.super_properties, 
         }
     });
 
@@ -82,7 +81,7 @@ const changeHypesquadHouse = async (id: string, token: string): Promise<boolean>
  * Modify the user's password, email, and/or language.
  * @param {object} options User options
  */
-const modify = async ({ username, email, new_password, avatar, language, token, password }: ModifyOptions): Promise<ModifyReturn> => {
+const modify = async ({ username, email, new_password, avatar, language, token, password }) => {
     const userObj = await user(token);
     await changeLanguage(language || 'en-US', token);
 
@@ -100,19 +99,19 @@ const modify = async ({ username, email, new_password, avatar, language, token, 
         body: body,
         headers: {
             'Host': 'discordapp.com',
-            'User-Agent': useragent,
+            'User-Agent': process.env.useragent,
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Content-Type': 'application/json',
             'Authorization': token,
-            'X-Super-Properties': super_properties
+            'X-Super-Properties': process.env.super_properties
         }
     });
 
     return res.json();
 }
 
-export {
+module.exports = {
     modify,
     changeHypesquadHouse,
     user

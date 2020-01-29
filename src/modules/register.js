@@ -1,13 +1,12 @@
-import fetch from 'node-fetch';
-import { randomBytes } from 'crypto';
-import Fingerprint from './fingerprint';
-import { super_properties, useragent } from '../config';
-import solveCaptcha from './util/solve_captcha';
+const fetch = require('node-fetch');
+const { randomBytes } = require('crypto');
+const Fingerprint = require('./fingerprint');
+const solveCaptcha = require('../util/solve_captcha');
 
 /**
  * Try to register an account.
  */
-const register = async ({ email, username, captcha }: { email?: string; username: string; captcha: boolean }) => {
+const register = async ({ email, username, captcha }) => {
     const { fingerprint } = await Fingerprint();
     const body = JSON.stringify({
         fingerprint: fingerprint,
@@ -25,11 +24,11 @@ const register = async ({ email, username, captcha }: { email?: string; username
         body: body,
         headers: {
             'Host': 'discordapp.com',
-            'User-Agent': useragent,
+            'User-Agent': process.env.useragent,
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Content-Type': 'application/json',
-            'X-Super-Properties': super_properties, 
+            'X-Super-Properties': process.env.super_properties, 
             'X-Fingerprint': fingerprint
         }
     });
@@ -37,4 +36,4 @@ const register = async ({ email, username, captcha }: { email?: string; username
     return res.json();
 }
 
-export default register;
+module.exports = register;

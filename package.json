@@ -1,28 +1,29 @@
 {
   "name": "discord-verify",
-  "version": "1.0.7",
-  "description": "Verify and secure Discord accounts.",
+  "version": "1.1.0",
+  "description": "Automate Discord.",
+  "directories": {
+    "example": "examples"
+  },
   "dependencies": {
-    "@types/prompts": "^2.0.3",
-    "@types/user-agents": "^1.0.0",
-    "prompts": "^2.3.0",
-    "user-agents": "^1.0.494"
-  },
-  "devDependencies": {
-    "@types/node": "^13.1.1",
-    "@types/node-fetch": "^2.5.4",
     "node-fetch": "^2.6.0",
-    "typescript": "^3.7.4"
+    "prompts": "^2.3.0",
+    "user-agents": "^1.0.500"
   },
-  "scripts": {},
+  "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/khafradev/discord-verify.git"
+    "url": "git+https://github.com/KhafraDev/discord-verify.git"
   },
+  "keywords": [
+    "Discord",
+    "selfbot"
+  ],
   "author": "Khafra",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/khafradev/discord-verify/issues"
+    "url": "https://github.com/KhafraDev/discord-verify/issues"
   },
-  "homepage": "https://github.com/khafradev/discord-verify#readme"
+  "homepage": "https://github.com/KhafraDev/discord-verify#readme",
+  "main": "src/index.js"
 }

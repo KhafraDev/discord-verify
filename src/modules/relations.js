@@ -1,18 +1,16 @@
-import fetch from 'node-fetch';
-import { Friendlist } from 'discord-verify';
-import { useragent, super_properties } from '../config';
-import { delay } from './util/delay';
+const fetch = require('node-fetch');
+const { delay } = require('../util/delay');
 
 /**
  * Returns all the user's friends.
  * @param token Discord token
- * @returns {Promise<Friendlist[]>}
+ * @returns {Promise<Object[]>}
  */
-const list = async (token: string): Promise<Friendlist[]> => {
+const list = async token => {
     const res = await fetch('https://discordapp.com/api/v6/users/@me/relationships', {
         headers: {
             'Host': 'discordapp.com',
-            'User-Agent': useragent,
+            'User-Agent': process.env.useragent,
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Authorization': token
@@ -27,22 +25,22 @@ const list = async (token: string): Promise<Friendlist[]> => {
  * @param {string[]} ids List of friends to be removed by ID.
  * @param {string} token Discord Token.
  */
-const remove = async (ids: string[], token: string): Promise<boolean> => {
+const remove = async (ids, token) => {
     const XContextProperties = Buffer.from(JSON.stringify({
         location: 'ContextMenu'
-    })).toString('base64');
+    })).toString('base64'); // Discord tracking...
 
     for(const id of ids) {
         const res = await fetch('https://discordapp.com/api/v6/users/@me/relationships/' + id, {
             method: 'DELETE',
             headers: {
                 'Host': 'discordapp.com',
-                'User-Agent': useragent,
+                'User-Agent': process.env.useragent,
                 'Accept': '*/*',
                 'Accept-Language': 'en-US',
                 'X-Context-Properties': XContextProperties,
                 'Authorization': token,
-                'X-Super-Properties': super_properties
+                'X-Super-Properties': process.env.super_properties
             }
         });
 
@@ -56,7 +54,7 @@ const remove = async (ids: string[], token: string): Promise<boolean> => {
     return true;
 }
 
-export {
+module.exports = {
     list,
     remove
 }

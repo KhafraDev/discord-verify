@@ -1,5 +1,5 @@
-import { confirmation } from '../src/email';
-import prompts = require('prompts');
+const { confirmation } = require('../src/index');
+const prompts = require('prompts');
 
 (async () => {
     const { token } = await prompts({

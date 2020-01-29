@@ -1,8 +1,6 @@
-import fetch from 'node-fetch';
-
-import { useragent, super_properties } from '../config';
-import Fingerprint from './fingerprint';
-import solveCaptcha from './util/solve_captcha';
+const fetch = require('node-fetch');
+const Fingerprint = require('./fingerprint');
+const solveCaptcha = require('../util/solve_captcha');
 
 /**
  * Verify an email.
@@ -10,9 +8,9 @@ import solveCaptcha from './util/solve_captcha';
  * @param {string} token Discord account token.
  * @returns {Promise<string>} 
  */
-const verify = async (verify_url: string, token: string): Promise<string> => {
+const verify = async (verify_url, token) => {
     const redirect_url = await redirect(verify_url);
-    const token_param: string = new URL(redirect_url.replace(/verify#token/g, 'verify?token')).searchParams.get('token');
+    const token_param = new URL(redirect_url.replace(/verify#token/g, 'verify?token')).searchParams.get('token');
     const captcha_key = await solveCaptcha(redirect_url);
     const body = JSON.stringify({ 
         token: token_param,
@@ -25,12 +23,12 @@ const verify = async (verify_url: string, token: string): Promise<string> => {
         body: body,
         headers: {
             'Host': 'discordapp.com',
-            'User-Agent': useragent, 
+            'User-Agent': process.env.useragent, 
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Content-Type': 'application/json',
             'Authorization': token,
-            'X-Super-Properties': super_properties,
+            'X-Super-Properties': process.env.super_properties,
             'X-Fingerprint': fingerprint,
         }
     });
@@ -38,7 +36,11 @@ const verify = async (verify_url: string, token: string): Promise<string> => {
     return res.text();
 }
 
-const redirect = async (url: string): Promise<string> => {
+/**
+ * Get the redirect URL
+ * @param {string} url URL
+ */
+const redirect = async url => {
     const res = await fetch(url);
     return res.url;
 }
@@ -47,17 +49,17 @@ const redirect = async (url: string): Promise<string> => {
  * Resend email-confirmation email.
  * @param {string} token Discord Token.
  */
-const confirmation = async (token: string): Promise<boolean> => {
+const confirmation = async token => {
     const { fingerprint } = await Fingerprint();
     const res = await fetch('https://discordapp.com/api/v6/auth/verify/resend', {
         method: 'POST',
         headers: {
             'Host': 'discordapp.com',
-            'User-Agent': useragent,
+            'User-Agent': process.env.useragent,
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Authorization': token,
-            'X-Super-Properties': super_properties,
+            'X-Super-Properties': process.env.super_properties,
             'X-Fingerprint': fingerprint
         }
     });
@@ -66,7 +68,7 @@ const confirmation = async (token: string): Promise<boolean> => {
 }
 
 
-export {
+module.exports = {
     verify,
     confirmation
 };

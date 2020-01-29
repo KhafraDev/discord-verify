@@ -1,8 +1,8 @@
-import check from '../src/name';
-import prompts = require('prompts');
-import { delay } from '../src/util/delay';
+const { name } = require('../src/index');
+const prompts = require('prompts');
+const { delay } = require('../src/util/delay');
 
-(async () => {
+(async () => {    
     const { username, password, token, run } = await prompts([
         {
             type: 'text',
@@ -27,13 +27,13 @@ import { delay } from '../src/util/delay';
     ]);
 
     for(let i = 0; i < run; i++) {
-        const res = await check(username, password, token);
+        const res = await name(username, password, token);
         if(typeof res === 'string') {
             console.log('%d. %s', i + 1, res);
         } else {
             console.log('%d. Changed usernames!', i + 1);
             break; // exit for loop
         }
-        await delay(Math.floor(Math.random() * (2000 - 1000 + 1) + 1000)); // delay anywhere from 1 second to 2 seconds.
+        await delay(Math.floor(Math.random() * (2000 - 1000 + 1) + 1000));
     }
 })();

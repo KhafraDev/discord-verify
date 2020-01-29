@@ -1,6 +1,6 @@
-import { modify } from './account';
+const { modify } = require('./account');
 
-const check = async (name: string, password: string, token: string): Promise<boolean|string> => {
+const check = async (name, password, token) => {
     const json = await modify({ username: name, password: password, token: token });
     if(Array.isArray(json.username)) {
         return json.username[0];
@@ -9,4 +9,4 @@ const check = async (name: string, password: string, token: string): Promise<boo
     }
 }
 
-export default check;
+module.exports = check;

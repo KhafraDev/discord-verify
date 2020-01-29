@@ -1,19 +1,20 @@
-import fetch from 'node-fetch';
-import { useragent } from '../config';
-import { Fingerprint } from 'discord-verify';
+const fetch = require('node-fetch');
 
 /**
- * Get the X-Fingerprint Header from Discord
+ * Get the X-Fingerprint Header = require(Discord
  */
-const fingerprint = async (): Promise<Fingerprint> => {
-    const ContextProperties = Buffer.from(JSON.stringify({ location: 'Login' })).toString('base64');
+const fingerprint = async () => {
+    const ContextProperties = Buffer.from(JSON.stringify({ 
+        location: 'Login' 
+    })).toString('base64');
+
     const res = await fetch('https://discordapp.com/api/v6/experiments', {
         headers: {
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Content-Type': 'application/json',
             'Host': 'discordapp.com',
-            'User-Agent': useragent,
+            'User-Agent': process.env.useragent,
             'X-Fingerprint': '',
             'X-Context-Properties': ContextProperties // somehow missed this completely
         }
@@ -28,4 +29,4 @@ const fingerprint = async (): Promise<Fingerprint> => {
     throw new Error(`Received status ${res.status} (${res.statusText}).`);
 }
 
-export default fingerprint;
+module.exports = fingerprint;
