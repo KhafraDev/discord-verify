@@ -18,10 +18,10 @@ const solveCaptcha = async verify_url => {
     }));
     const request = await res.text();
 
-    if(!parseInt(request.slice(3))) throw new Error(`Received request "${request}"`);
+    if (!parseInt(request.slice(3))) throw new Error(`Received request "${request}"`);
 
     let text;
-    while(typeof text !== 'string') {
+    while (typeof text !== 'string') {
         text = await (await fetch('https://2captcha.com/res.php?' + stringify({
             key: process.env.captcha,
             id: request.slice(3),

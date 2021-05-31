@@ -22,24 +22,24 @@ import { delay } from '../src/util/delay.js';
     ]);
     
     let res = await register({ email: email, username: username, captcha: false });
-    for(let i = 1; i < run; i++) { // starts at 1 because it runs initially
+    for (let i = 1; i < run; i++) { // starts at 1 because it runs initially
         const options = {
             email: email === '' ? null : email,
             username: username,
             captcha: false
         }
 
-        if(res.captcha_key) {
+        if (res.captcha_key) {
             options.captcha = true;
             res = await register(options);
-        } else if(res.token) {
+        } else if (res.token) {
             console.log(res);
             break;
         } else {
-            if(email !== '' && res.email) { // email supplied but an error with the email came back
+            if (email !== '' && res.email) { // email supplied but an error with the email came back
                 console.log(res.email[0]);
                 break;
-            } else if(res.username) {
+            } else if (res.username) {
                 console.log('%d. %s', i, res.username[0]);
             }
         }

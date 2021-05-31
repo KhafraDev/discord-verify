@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import { api } from '../util/constants.js';
 
 /**
  * Get the X-Fingerprint Header = require(Discord
@@ -8,21 +9,21 @@ const fingerprint = async () => {
         location: 'Login' 
     })).toString('base64');
 
-    const res = await fetch('https://discordapp.com/api/v6/experiments', {
+    const res = await fetch(`${api()}experiments`, {
         headers: {
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Content-Type': 'application/json',
-            'Host': 'discordapp.com',
+            'Host': 'discord.com',
             'User-Agent': process.env.useragent,
             'X-Fingerprint': '',
             'X-Context-Properties': ContextProperties // somehow missed this completely
         }
     });
 
-    if(res.status === 200) {
+    if (res.status === 200) {
         return res.json();
-    } else if(res.status === 403) {
+    } else if (res.status === 403) {
         throw new Error('Status 403 received, try using a different IP address.');
     }
     

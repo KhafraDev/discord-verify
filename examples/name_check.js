@@ -26,9 +26,9 @@ import { delay } from '../src/util/delay.js';
         }
     ]);
 
-    for(let i = 0; i < run; i++) {
+    for (let i = 0; i < run; i++) {
         const res = await name(username, password, token);
-        if(typeof res === 'string') {
+        if (typeof res === 'string') {
             console.log('%d. %s', i + 1, res);
         } else {
             console.log('%d. Changed usernames!', i + 1);

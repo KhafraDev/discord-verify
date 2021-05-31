@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import { api } from '../util/constants.js';
 
 /**
  * Join a Discord server.
@@ -7,14 +8,14 @@ import fetch from 'node-fetch';
  */
 const join = async (invite, token) => {
     const ContextProperties = await XContextProperties(invite);
-    if(typeof ContextProperties !== 'string') {
+    if (typeof ContextProperties !== 'string') {
         throw new Error(JSON.stringify(ContextProperties));
     }
 
-    const res = await fetch('https://discordapp.com/api/v6/invites/' + invite, {
+    const res = await fetch(`${api()}invites/${invite}`, {
         method: 'POST',
         headers: {
-            'Host': 'discordapp.com',
+            'Host': 'discord.com',
             'Content-Type': 'application/json',
             'User-Agent': process.env.useragent,
             'Accept': '*/*',
@@ -25,7 +26,7 @@ const join = async (invite, token) => {
         }
     });
 
-    if(res.status === 200) {
+    if (res.status === 200) {
         return res.json();
     } else {
         return false;
@@ -37,10 +38,10 @@ const join = async (invite, token) => {
  * @param {string} code The invite code
  */
 const XContextProperties = async code => {
-    const res = await fetch('https://discordapp.com/api/v6/invites/' + code);
+    const res = await fetch(`${api()}invites/${code}`);
     
     const json = await res.json(); // even errors are in json format
-    if(res.status === 200) {
+    if (res.status === 200) {
         return Buffer.from(JSON.stringify({
             location: 'Accept Invite Page', // static
             location_guild_id: json.guild.id,

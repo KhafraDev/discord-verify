@@ -9,7 +9,7 @@ import { delay } from '../src/util/delay.js';
  */
 const send = async (number, token) => {
     let p = await phone(number, token);
-    while(p.message === 'You are being rate limited.') {
+    while (p.message === 'You are being rate limited.') {
         console.log('rate limited for %d seconds (+10)', Number(p.retry_after / 1000));
         await delay(p.retry_after + 10000); // retry_limit + 10 seconds
         p = await phone(number, token);
@@ -43,12 +43,12 @@ const send = async (number, token) => {
     ]);
 
     const { number, id, CountryCode } = await getNumber();
-    if(!number || !id || !CountryCode) { 
+    if (!number || !id || !CountryCode) { 
         throw new Error('Missing 1 or more phone number parameters.');
     }
 
     const text = await send(`${CountryCode}${number}`, token);
-    if(text.message !== 'sent SMS code') {
+    if (text.message !== 'sent SMS code') {
         throw new Error('SMS code NOT sent!');
     }
 

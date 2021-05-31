@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import { api } from '../util/constants.js';
 import { delay } from '../util/delay.js';
 
 /**
@@ -7,9 +8,9 @@ import { delay } from '../util/delay.js';
  * @returns {Promise<Object[]>}
  */
 const list = async token => {
-    const res = await fetch('https://discordapp.com/api/v6/users/@me/relationships', {
+    const res = await fetch(`${api()}users/@me/relationships`, {
         headers: {
-            'Host': 'discordapp.com',
+            'Host': 'discord.com',
             'User-Agent': process.env.useragent,
             'Accept': '*/*',
             'Accept-Language': 'en-US',
@@ -30,11 +31,11 @@ const remove = async (ids, token) => {
         location: 'ContextMenu'
     })).toString('base64'); // Discord tracking...
 
-    for(const id of ids) {
-        const res = await fetch('https://discordapp.com/api/v6/users/@me/relationships/' + id, {
+    for (const id of ids) {
+        const res = await fetch(`${api()}users/@me/relationships/${id}`, {
             method: 'DELETE',
             headers: {
-                'Host': 'discordapp.com',
+                'Host': 'discord.com',
                 'User-Agent': process.env.useragent,
                 'Accept': '*/*',
                 'Accept-Language': 'en-US',
@@ -44,7 +45,7 @@ const remove = async (ids, token) => {
             }
         });
 
-        if(res.status !== 204) {
+        if (res.status !== 204) {
             throw new Error(`Received status ${res.status} (${res.statusText}).`);
         }
         

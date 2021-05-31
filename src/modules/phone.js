@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import { stringify } from 'querystring';
+import { api } from '../util/constants.js';
 import { delay } from '../util/delay.js';
 
 /**
@@ -10,14 +11,14 @@ import { delay } from '../util/delay.js';
 const phone = async (n, token) => {
     const body = JSON.stringify({ phone: n });
 
-    const res = await fetch('https://discordapp.com/api/v6/users/@me/phone', {
+    const res = await fetch(`${api()}users/@me/phone`, {
         method: 'POST',
         body: body,
         headers: {
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Content-Type': 'application/json',
-            'Host': 'discordapp.com',
+            'Host': 'discord.com',
             'User-Agent': process.env.useragent,
             'Authorization': token,
             'X-Super-Properties': process.env.super_properties
@@ -37,14 +38,14 @@ const phone = async (n, token) => {
 const phone_code = async (code, token) => {
     const body = JSON.stringify({ code: code });
 
-    const res = await fetch('https://discordapp.com/api/v6/users/@me/phone/verify', {
+    const res = await fetch(`${api()}users/@me/phone/verify`, {
         method: 'POST',
         body: body,
         headers: {
             'Accept': '*/*',
             'Accept-Language': 'en-US',
             'Content-Type': 'application/json',
-            'Host': 'discordapp.com',
+            'Host': 'discord.com',
             'User-Agent': process.env.useragent,
             'Authorization': token,
             'X-Super-Properties': process.env.super_properties
@@ -65,7 +66,7 @@ const getNumber = async () => {
         apikey: process.env.smspva
     }));
 
-    if(res.status === 200) {
+    if (res.status === 200) {
         return res.json();
     } else {
         throw new Error(`Received status ${res.status} (${res.statusText}).`);
@@ -78,7 +79,7 @@ const getNumber = async () => {
  * @param {boolean} perfect_accuracy Enable perfect, 10 minute, accuracy.
  */
 const getSMS = async id => {
-    while(true) {
+    while (true) {
         const res = await fetch('http://smspva.com/priemnik.php?' + stringify({
             metod: 'get_sms',
             country: 'ru',

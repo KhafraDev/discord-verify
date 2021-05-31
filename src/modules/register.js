@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 import { randomBytes } from 'crypto';
 import Fingerprint from './fingerprint.js';
 import solveCaptcha from '../util/solve_captcha.js';
+import { api } from '../util/constants.js';
 
 /**
  * Try to register an account.
@@ -16,14 +17,14 @@ const register = async ({ email, username, captcha }) => {
         invite: null,
         consent: true,
         gift_code_sku_id: null,
-        captcha_key: captcha ? await solveCaptcha('https://discordapp.com/register') : null
+        captcha_key: captcha ? await solveCaptcha('https://discord.com/register') : null
     });
 
-    const res = await fetch('https://discordapp.com/api/v6/auth/register', {
+    const res = await fetch(`${api()}auth/register`, {
         method: 'POST',
         body: body,
         headers: {
-            'Host': 'discordapp.com',
+            'Host': 'discord.com',
             'User-Agent': process.env.useragent,
             'Accept': '*/*',
             'Accept-Language': 'en-US',

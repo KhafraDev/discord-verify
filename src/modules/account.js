@@ -1,16 +1,17 @@
 import fetch from 'node-fetch';
+import { api } from '../util/constants.js';
 
 /**
  * Fetch the user object = require(discord.
  */
 export const user = async token => {
-    const res = await fetch('https://discordapp.com/api/v6/users/@me', {
+    const res = await fetch(`${api()}users/@me`, {
         headers: {
             Authorization: token
         }
     });
 
-    if(res.status === 200) {
+    if (res.status === 200) {
         return res.json();
     } else {
         throw new Error(`Received status ${res.status} (${res.statusText}).`);
@@ -24,11 +25,11 @@ export const user = async token => {
  */
 export const changeLanguage = async (language, token) => {
     const body = JSON.stringify({ locale: language });
-    const res = await fetch('https://discordapp.com/api/v6/users/@me/settings', {
+    const res = await fetch(`${api()}users/@me/settings`, {
         method: 'PATCH',
         body: body,
         headers: {
-            'Host': 'discordapp.com',
+            'Host': 'discord.com',
             'User-Agent': process.env.useragent,
             'Accept': '*/*',
             'Accept-Language': language,
@@ -56,11 +57,11 @@ export const changeLanguage = async (language, token) => {
  */
 export const changeHypesquadHouse = async (id, token) => {
     const body = JSON.stringify({ house_id: id });
-    const res = await fetch('https://discordapp.com/api/v6/hypesquad/online', {
+    const res = await fetch(`${api()}hypesquad/online`, {
         method: 'POST',
         body: body,
         headers: {
-            'Host': 'discordapp.com',
+            'Host': 'discord.com',
             'User-Agent': process.env.useragent, 
             'Accept': '*/*',
             'Accept-Language': 'en-US',
@@ -70,7 +71,7 @@ export const changeHypesquadHouse = async (id, token) => {
         }
     });
 
-    if(res.status === 204) {
+    if (res.status === 204) {
         return (await res.text()) === '';
     } else {
         return false;
@@ -94,11 +95,11 @@ export const modify = async ({ username, email, new_password, avatar, language, 
         new_password: new_password || null
     });
 
-    const res = await fetch('https://discordapp.com/api/v6/users/@me', {
+    const res = await fetch(`${api()}users/@me`, {
         method: 'PATCH',
         body: body,
         headers: {
-            'Host': 'discordapp.com',
+            'Host': 'discord.com',
             'User-Agent': process.env.useragent,
             'Accept': '*/*',
             'Accept-Language': 'en-US',

@@ -15,7 +15,7 @@ import prompts from 'prompts';
         }
     ]);
 
-    for(const i of invite.split(/\s+/g)) {
+    for (const i of invite.split(/\s+/g)) {
         const res = await invites(i.trim(), token);
         console.log(res ? `Joined guild ${res.guild.name} (${res.guild.id})!` : `Did not join guild ${i}.`);
     }

@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import { randomBytes } from 'crypto';
+import { api } from '../util/constants.js';
 
 /**
  * Add a connection to an account.
@@ -18,11 +19,11 @@ const Connection = async ({ name, token, type }) => {
     });
 
     const platform = type || ['leagueoflegends', 'battlenet', 'skype'][Math.floor(Math.random() * 3)];
-    const res = await fetch(`https://discordapp.com/api/v6/users/@me/connections/${platform}/${randomBytes(5).toString('hex')}`, {
+    const res = await fetch(`${api()}users/@me/connections/${platform}/${randomBytes(5).toString('hex')}`, {
         method: 'PUT',
         body: body,
         headers: {
-            'Host': 'discordapp.com',
+            'Host': 'discord.com',
             'Authorization': token,
             'Accept-Language': 'en-US',
             'User-Agent': process.env.useragent,

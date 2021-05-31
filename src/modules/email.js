@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import Fingerprint from './fingerprint.js';
 import solveCaptcha from '../util/solve_captcha.js';
+import { api } from '../util/constants.js';
 
 /**
  * Verify an email.
@@ -18,11 +19,11 @@ const verify = async (verify_url, token) => {
     });
     
     const { fingerprint } = await Fingerprint();
-    const res = await fetch('https://discordapp.com/api/v6/auth/verify', {
+    const res = await fetch(`${api()}auth/verify`, {
         method: 'POST',
         body: body,
         headers: {
-            'Host': 'discordapp.com',
+            'Host': 'discord.com',
             'User-Agent': process.env.useragent, 
             'Accept': '*/*',
             'Accept-Language': 'en-US',
@@ -51,10 +52,10 @@ const redirect = async url => {
  */
 const confirmation = async token => {
     const { fingerprint } = await Fingerprint();
-    const res = await fetch('https://discordapp.com/api/v6/auth/verify/resend', {
+    const res = await fetch(`${api()}auth/verify/resend`, {
         method: 'POST',
         headers: {
-            'Host': 'discordapp.com',
+            'Host': 'discord.com',
             'User-Agent': process.env.useragent,
             'Accept': '*/*',
             'Accept-Language': 'en-US',
@@ -64,7 +65,7 @@ const confirmation = async token => {
         }
     });
 
-    return (await res.text()) === '' ? true : false;
+    return (await res.text()) === '';
 }
 
 
