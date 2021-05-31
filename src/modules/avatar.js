@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 /**
  * Get a random avatar from https://unsplash.com/
@@ -10,4 +10,4 @@ const getAvatar = async () => {
     return 'data:' + res.headers.get('Content-Type') + ';base64,' + Buffer.from(buffer).toString('base64');
 }
 
-module.exports = getAvatar;
+export default getAvatar;

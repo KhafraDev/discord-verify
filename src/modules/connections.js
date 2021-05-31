@@ -1,5 +1,5 @@
-const fetch = require('node-fetch');
-const { randomBytes } = require('crypto');
+import fetch from 'node-fetch';
+import { randomBytes } from 'crypto';
 
 /**
  * Add a connection to an account.
@@ -34,4 +34,4 @@ const Connection = async ({ name, token, type }) => {
     return res.ok;
 }
 
-module.exports = Connection;
+export default Connection;

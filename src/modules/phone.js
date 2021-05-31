@@ -1,6 +1,6 @@
-const fetch = require('node-fetch');
-const { stringify } = require('querystring');
-const { delay } = require('../util/delay');
+import fetch from 'node-fetch';
+import { stringify } from 'querystring';
+import { delay } from '../util/delay.js';
 
 /**
  * Send an initial request for a SMS code.
@@ -98,7 +98,7 @@ const getSMS = async id => {
 }
 
 
-module.exports = {
+export default {
     phone,
     phone_code,
     getNumber,

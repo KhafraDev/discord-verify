@@ -1,5 +1,5 @@
-const { verify } = require('../src/index');
-const prompts = require('prompts');
+import { verify } from '../src/index.js';
+import prompts from 'prompts';
 
 (async () => {
     const { token, url } = await prompts([

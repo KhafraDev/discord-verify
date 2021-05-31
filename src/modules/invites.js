@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 /**
  * Join a Discord server.
@@ -52,4 +52,4 @@ const XContextProperties = async code => {
     }
 }
 
-module.exports = join;
+export default join;

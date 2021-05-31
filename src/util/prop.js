@@ -1,4 +1,4 @@
-const UserAgent = require('user-agents');
+import UserAgent from 'user-agents';
 const Agent = new UserAgent().random().data;
 
 /**

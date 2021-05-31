@@ -1,5 +1,5 @@
-const fetch = require('node-fetch');
-const { delay } = require('../util/delay');
+import fetch from 'node-fetch';
+import { delay } from '../util/delay.js';
 
 /**
  * Returns all the user's friends.
@@ -54,7 +54,7 @@ const remove = async (ids, token) => {
     return true;
 }
 
-module.exports = {
+export default {
     list,
     remove
 }

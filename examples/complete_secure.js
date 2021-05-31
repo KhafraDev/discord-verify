@@ -1,17 +1,17 @@
-const {
-    modify,
-    getNumber,
-    getSMS,
+import { 
+    modify, 
+    getNumber, 
+    getSMS, 
     phone,
-    phone_code,
-    verify,
-    list,
-    remove,
-    avatar
-} = require('../src/index');
+    phone_code, 
+    verify, 
+    list, 
+    remove, 
+    avatar 
+} from '../src/index.js';
 
-const prompts = require('prompts');
-const { delay } = require('../src/util/delay.js');
+import prompts from 'prompts';
+import { delay } from '../src/util/delay.js';
 
 /**
  * Send in a request or wait until you are no longer rate-limited.

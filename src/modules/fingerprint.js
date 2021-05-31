@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 /**
  * Get the X-Fingerprint Header = require(Discord
@@ -29,4 +29,4 @@ const fingerprint = async () => {
     throw new Error(`Received status ${res.status} (${res.statusText}).`);
 }
 
-module.exports = fingerprint;
+export default fingerprint;

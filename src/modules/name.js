@@ -1,4 +1,4 @@
-const { modify } = require('./account');
+import { modify } from './account.js';
 
 const check = async (name, password, token) => {
     const json = await modify({ username: name, password: password, token: token });
@@ -9,4 +9,4 @@ const check = async (name, password, token) => {
     }
 }
 
-module.exports = check;
+export default check;

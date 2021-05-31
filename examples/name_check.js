@@ -1,6 +1,6 @@
-const { name } = require('../src/index');
-const prompts = require('prompts');
-const { delay } = require('../src/util/delay');
+import { name } from '../src/index.js';
+import prompts from 'prompts';
+import { delay } from '../src/util/delay.js';
 
 (async () => {    
     const { username, password, token, run } = await prompts([

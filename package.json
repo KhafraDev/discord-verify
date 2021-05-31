@@ -1,16 +1,16 @@
 {
   "name": "discord-verify",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Automate Discord.",
+  "type": "module",
   "directories": {
     "example": "examples"
   },
   "dependencies": {
-    "node-fetch": "^2.6.0",
-    "prompts": "^2.3.0",
-    "user-agents": "^1.0.500"
+    "node-fetch": "^2.6.1",
+    "prompts": "^2.4.1",
+    "user-agents": "^1.0.668"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KhafraDev/discord-verify.git"

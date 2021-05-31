@@ -1,6 +1,6 @@
-const { modify, getNumber, getSMS, phone, phone_code } = require('../src/index');
-const prompts = require('prompts');
-const { delay } = require('../src/util/delay.js');
+import { modify, getNumber, getSMS, phone, phone_code } from '../src/index.js';
+import prompts from 'prompts';
+import { delay } from '../src/util/delay.js';
 
 /**
  * Send in a request or wait until you are no longer rate-limited.

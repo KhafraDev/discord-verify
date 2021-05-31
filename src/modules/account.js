@@ -1,9 +1,9 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 /**
  * Fetch the user object = require(discord.
  */
-const user = async token => {
+export const user = async token => {
     const res = await fetch('https://discordapp.com/api/v6/users/@me', {
         headers: {
             Authorization: token
@@ -22,7 +22,7 @@ const user = async token => {
  * @param {string} language 
  * @param {string} token 
  */
-const changeLanguage = async (language, token) => {
+export const changeLanguage = async (language, token) => {
     const body = JSON.stringify({ locale: language });
     const res = await fetch('https://discordapp.com/api/v6/users/@me/settings', {
         method: 'PATCH',
@@ -54,7 +54,7 @@ const changeLanguage = async (language, token) => {
  * @param {string} token Discord account token.
  * @returns {Promise<boolean>}
  */
-const changeHypesquadHouse = async (id, token) => {
+export const changeHypesquadHouse = async (id, token) => {
     const body = JSON.stringify({ house_id: id });
     const res = await fetch('https://discordapp.com/api/v6/hypesquad/online', {
         method: 'POST',
@@ -81,7 +81,7 @@ const changeHypesquadHouse = async (id, token) => {
  * Modify the user's password, email, and/or language.
  * @param {object} options User options
  */
-const modify = async ({ username, email, new_password, avatar, language, token, password }) => {
+export const modify = async ({ username, email, new_password, avatar, language, token, password }) => {
     const userObj = await user(token);
     await changeLanguage(language || 'en-US', token);
 
@@ -109,10 +109,4 @@ const modify = async ({ username, email, new_password, avatar, language, token, 
     });
 
     return res.json();
-}
-
-module.exports = {
-    modify,
-    changeHypesquadHouse,
-    user
 }

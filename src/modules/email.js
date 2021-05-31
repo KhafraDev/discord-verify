@@ -1,6 +1,6 @@
-const fetch = require('node-fetch');
-const Fingerprint = require('./fingerprint');
-const solveCaptcha = require('../util/solve_captcha');
+import fetch from 'node-fetch';
+import Fingerprint from './fingerprint.js';
+import solveCaptcha from '../util/solve_captcha.js';
 
 /**
  * Verify an email.
@@ -68,7 +68,7 @@ const confirmation = async token => {
 }
 
 
-module.exports = {
+export default {
     verify,
     confirmation
 };

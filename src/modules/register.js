@@ -1,7 +1,7 @@
-const fetch = require('node-fetch');
-const { randomBytes } = require('crypto');
-const Fingerprint = require('./fingerprint');
-const solveCaptcha = require('../util/solve_captcha');
+import fetch from 'node-fetch';
+import { randomBytes } from 'crypto';
+import Fingerprint from './fingerprint.js';
+import solveCaptcha from '../util/solve_captcha.js';
 
 /**
  * Try to register an account.
@@ -36,4 +36,4 @@ const register = async ({ email, username, captcha }) => {
     return res.json();
 }
 
-module.exports = register;
+export default register;

@@ -1,6 +1,6 @@
-const { stringify } = require('querystring');
-const fetch = require('node-fetch');
-const { delay } = require('./delay.js');
+import { stringify } from 'querystring';
+import fetch from 'node-fetch';
+import { delay } from './delay.js';
 
 const key = '6Lef5iQTAAAAAKeIvIY-DeexoO3gj7ryl9rLMEnn'; // static key (?)
 
@@ -35,4 +35,4 @@ const solveCaptcha = async verify_url => {
     return text.substring(3); // OK|[ID]
 }
 
-module.exports = solveCaptcha;
+export default solveCaptcha;

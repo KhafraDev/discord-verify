@@ -1,5 +1,5 @@
-const { changeHypesquadHouse } = require('../src/index');
-const prompts = require('prompts');
+import { changeHypesquadHouse } from '../src/index.js';
+import prompts from 'prompts';
 
 (async () => {
     const { id, token } = await prompts([
