@@ -12,7 +12,7 @@ import { api } from '../util/constants.js';
  *  'skype'
  * ]
  */
-const Connection = async ({ name, token, type }) => {
+export const Connection = async ({ name, token, type }) => {
     const body = JSON.stringify({
         name: name,
         visibility: Math.floor(Math.random() * 2)
@@ -34,5 +34,3 @@ const Connection = async ({ name, token, type }) => {
 
     return res.ok;
 }
-
-export default Connection;

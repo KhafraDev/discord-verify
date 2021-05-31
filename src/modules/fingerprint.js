@@ -4,7 +4,7 @@ import { api } from '../util/constants.js';
 /**
  * Get the X-Fingerprint Header = require(Discord
  */
-const fingerprint = async () => {
+export const fingerprint = async () => {
     const ContextProperties = Buffer.from(JSON.stringify({ 
         location: 'Login' 
     })).toString('base64');
@@ -29,5 +29,3 @@ const fingerprint = async () => {
     
     throw new Error(`Received status ${res.status} (${res.statusText}).`);
 }
-
-export default fingerprint;

@@ -1,6 +1,6 @@
 import { modify } from './account.js';
 
-const check = async (name, password, token) => {
+export const check = async (name, password, token) => {
     const json = await modify({ username: name, password: password, token: token });
     if (Array.isArray(json.username)) {
         return json.username[0];
@@ -8,5 +8,3 @@ const check = async (name, password, token) => {
         return true;
     }
 }
-
-export default check;

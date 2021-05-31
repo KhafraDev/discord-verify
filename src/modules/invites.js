@@ -6,7 +6,7 @@ import { api } from '../util/constants.js';
  * @param {string} invite Invite code to the server 
  * @param {string} token Discord account token.
  */
-const join = async (invite, token) => {
+export const join = async (invite, token) => {
     const ContextProperties = await XContextProperties(invite);
     if (typeof ContextProperties !== 'string') {
         throw new Error(JSON.stringify(ContextProperties));
@@ -52,5 +52,3 @@ const XContextProperties = async code => {
         return json;
     }
 }
-
-export default join;

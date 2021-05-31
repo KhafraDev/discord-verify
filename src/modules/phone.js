@@ -8,7 +8,7 @@ import { delay } from '../util/delay.js';
  * @param {string} n Phone number (including country code!)
  * @param {string} token Discord account token.
  */
-const phone = async (n, token) => {
+export const phone = async (n, token) => {
     const body = JSON.stringify({ phone: n });
 
     const res = await fetch(`${api()}users/@me/phone`, {
@@ -35,7 +35,7 @@ const phone = async (n, token) => {
  * @param {number} code 
  * @param {string} token Discord account token.
  */
-const phone_code = async (code, token) => {
+export const phone_code = async (code, token) => {
     const body = JSON.stringify({ code: code });
 
     const res = await fetch(`${api()}users/@me/phone/verify`, {
@@ -58,7 +58,7 @@ const phone_code = async (code, token) => {
 /**
  * Get a phone number to send the SMS to
  */
-const getNumber = async () => {
+export const getNumber = async () => {
     const res = await fetch('http://smspva.com/priemnik.php?' + stringify({
         metod: 'get_number',
         country: 'RU', // can be changed
@@ -78,7 +78,7 @@ const getNumber = async () => {
  * @param {number} id 
  * @param {boolean} perfect_accuracy Enable perfect, 10 minute, accuracy.
  */
-const getSMS = async id => {
+export const getSMS = async id => {
     while (true) {
         const res = await fetch('http://smspva.com/priemnik.php?' + stringify({
             metod: 'get_sms',
@@ -96,12 +96,4 @@ const getSMS = async id => {
 
         await delay(30000);
     }
-}
-
-
-export default {
-    phone,
-    phone_code,
-    getNumber,
-    getSMS
 }

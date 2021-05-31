@@ -9,7 +9,7 @@ const key = '6Lef5iQTAAAAAKeIvIY-DeexoO3gj7ryl9rLMEnn'; // static key (?)
  * @param {string} verify_url The Discord verification URL
  * @returns {Promise<string>} Captcha key
  */
-const solveCaptcha = async verify_url => {
+export const solveCaptcha = async verify_url => {
     const res = await fetch('https://2captcha.com/in.php?' + stringify({
         key: process.env.captcha,
         method: 'userrecaptcha',
@@ -34,5 +34,3 @@ const solveCaptcha = async verify_url => {
 
     return text.substring(3); // OK|[ID]
 }
-
-export default solveCaptcha;

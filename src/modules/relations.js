@@ -7,7 +7,7 @@ import { delay } from '../util/delay.js';
  * @param token Discord token
  * @returns {Promise<Object[]>}
  */
-const list = async token => {
+export const list = async token => {
     const res = await fetch(`${api()}users/@me/relationships`, {
         headers: {
             'Host': 'discord.com',
@@ -26,7 +26,7 @@ const list = async token => {
  * @param {string[]} ids List of friends to be removed by ID.
  * @param {string} token Discord Token.
  */
-const remove = async (ids, token) => {
+export const remove = async (ids, token) => {
     const XContextProperties = Buffer.from(JSON.stringify({
         location: 'ContextMenu'
     })).toString('base64'); // Discord tracking...
@@ -53,9 +53,4 @@ const remove = async (ids, token) => {
     }
 
     return true;
-}
-
-export default {
-    list,
-    remove
 }

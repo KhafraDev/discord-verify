@@ -1,6 +1,7 @@
-import { name } from '../src/index.js';
+import { check } from '../src/index.js';
 import prompts from 'prompts';
 import { delay } from '../src/util/delay.js';
+
 
 (async () => {    
     const { username, password, token, run } = await prompts([
@@ -27,7 +28,7 @@ import { delay } from '../src/util/delay.js';
     ]);
 
     for (let i = 0; i < run; i++) {
-        const res = await name(username, password, token);
+        const res = await check(username, password, token);
         if (typeof res === 'string') {
             console.log('%d. %s', i + 1, res);
         } else {

@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
-import Fingerprint from './fingerprint.js';
-import solveCaptcha from '../util/solve_captcha.js';
+import { fingerprint as Fingerprint } from './fingerprint.js';
+import { solveCaptcha } from '../util/solve_captcha.js';
 import { api } from '../util/constants.js';
 
 /**
@@ -9,7 +9,7 @@ import { api } from '../util/constants.js';
  * @param {string} token Discord account token.
  * @returns {Promise<string>} 
  */
-const verify = async (verify_url, token) => {
+export const verify = async (verify_url, token) => {
     const redirect_url = await redirect(verify_url);
     const token_param = new URL(redirect_url.replace(/verify#token/g, 'verify?token')).searchParams.get('token');
     const captcha_key = await solveCaptcha(redirect_url);
@@ -41,7 +41,7 @@ const verify = async (verify_url, token) => {
  * Get the redirect URL
  * @param {string} url URL
  */
-const redirect = async url => {
+export const redirect = async url => {
     const res = await fetch(url);
     return res.url;
 }
@@ -50,7 +50,7 @@ const redirect = async url => {
  * Resend email-confirmation email.
  * @param {string} token Discord Token.
  */
-const confirmation = async token => {
+export const confirmation = async token => {
     const { fingerprint } = await Fingerprint();
     const res = await fetch(`${api()}auth/verify/resend`, {
         method: 'POST',
@@ -67,9 +67,3 @@ const confirmation = async token => {
 
     return (await res.text()) === '';
 }
-
-
-export default {
-    verify,
-    confirmation
-};

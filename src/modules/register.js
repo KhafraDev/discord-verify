@@ -1,13 +1,13 @@
 import fetch from 'node-fetch';
 import { randomBytes } from 'crypto';
-import Fingerprint from './fingerprint.js';
-import solveCaptcha from '../util/solve_captcha.js';
+import { fingerprint as Fingerprint } from './fingerprint.js';
+import { solveCaptcha } from '../util/solve_captcha.js';
 import { api } from '../util/constants.js';
 
 /**
  * Try to register an account.
  */
-const register = async ({ email, username, captcha }) => {
+export const register = async ({ email, username, captcha }) => {
     const { fingerprint } = await Fingerprint();
     const body = JSON.stringify({
         fingerprint: fingerprint,
@@ -36,5 +36,3 @@ const register = async ({ email, username, captcha }) => {
 
     return res.json();
 }
-
-export default register;

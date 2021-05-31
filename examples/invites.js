@@ -1,4 +1,4 @@
-import { invites } from '../src/index.js';
+import { join } from '../src/index.js';
 import prompts from 'prompts';
 
 (async () => {
@@ -16,7 +16,7 @@ import prompts from 'prompts';
     ]);
 
     for (const i of invite.split(/\s+/g)) {
-        const res = await invites(i.trim(), token);
+        const res = await join(i.trim(), token);
         console.log(res ? `Joined guild ${res.guild.name} (${res.guild.id})!` : `Did not join guild ${i}.`);
     }
 })();
