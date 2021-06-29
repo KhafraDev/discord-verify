@@ -1,5 +1,5 @@
 import UserAgent from 'user-agents';
-import join from '../modules/invites';
+import { join } from 'path';
 const Agent = new UserAgent().random().data;
 
 /**
@@ -24,4 +24,4 @@ const super_properties = Buffer.from(JSON.stringify({
 process.env.super_properties = super_properties;
 process.env.useragent = Agent.userAgent;
 
-await import(join(process.cwd(), 'config.js'));
+import(join(process.cwd(), 'config.js'));
