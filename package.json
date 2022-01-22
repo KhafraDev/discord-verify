@@ -7,7 +7,7 @@
     "example": "examples"
   },
   "dependencies": {
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.1.1",
     "prompts": "^2.4.1",
     "user-agents": "^1.0.668"
   },
